@@ -2,9 +2,11 @@ package com.fm.cloud.bamboo.ribbon.loadbalancer;
 
 import com.netflix.loadbalancer.AbstractServerPredicate;
 import com.netflix.loadbalancer.PredicateKey;
+import com.netflix.zuul.context.RequestContext;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,7 +26,17 @@ public class BambooApiVersionPredicate extends AbstractServerPredicate {
                     .getServerMetadata(loadBalancerKey.getServiceId(), input.getServer());
             String versions = serverMetadata.get("versions");
             return matchVersion(versions, loadBalancerKey.getApiVersion());
-
+        } else if (com.netflix.zuul.context.RequestContext.getCurrentContext() != null) {
+            RequestContext requestContext = com.netflix.zuul.context.RequestContext.getCurrentContext();
+            List<String> versionList = requestContext.getRequestQueryParams().get("version");
+            String apiVersion = versionList.size() > 0 ? versionList.get(0) : null;
+            String serviceId = (String) requestContext.get("serviceId");
+            if (!StringUtils.isEmpty(apiVersion) && !StringUtils.isEmpty(serviceId)) {
+                Map<String, String> serverMetadata = ((BambooZoneAvoidanceRule) this.rule)
+                        .getServerMetadata(serviceId, input.getServer());
+                String versions = serverMetadata.get("versions");
+                return matchVersion(versions, apiVersion);
+            }
         }
         return true;
     }

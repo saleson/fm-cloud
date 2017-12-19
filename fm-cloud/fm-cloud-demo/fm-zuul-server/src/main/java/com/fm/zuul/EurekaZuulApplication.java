@@ -1,6 +1,9 @@
 package com.fm.zuul;
 
+import com.fm.cloud.bamboo.BambooConfiguration;
+import com.fm.cloud.bamboo.feign.BambooFeighConfiguration;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -19,6 +22,7 @@ import java.net.UnknownHostException;
 @EnableCircuitBreaker
 @EnableEurekaServer
 @EnableZuulProxy
+@ImportAutoConfiguration({BambooConfiguration.class, BambooFeighConfiguration.class})
 public class EurekaZuulApplication {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(EurekaZuulApplication.class);
 
