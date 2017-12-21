@@ -6,6 +6,7 @@ import org.springframework.aop.MethodMatcher;
 import java.lang.reflect.Method;
 
 /**
+ * 准确匹配指定的方法
  * Created by saleson on 2017/12/21.
  */
 public class StrictMethodMatcher implements MethodMatcher {
@@ -16,6 +17,11 @@ public class StrictMethodMatcher implements MethodMatcher {
     private Class[] argTypes;
 
 
+    /**
+     * 指定要匹配的方法
+     *
+     * @param specimen
+     */
     public StrictMethodMatcher(Method specimen) {
         this.specimen = specimen;
         this.methodName = specimen.getName();
@@ -24,6 +30,8 @@ public class StrictMethodMatcher implements MethodMatcher {
 
 
     /**
+     * 指定要匹配的方法名称和参数类型，需要完全一致
+     *
      * @param methodName
      * @param argTypes   如果传null就不判断方法参数类型
      */
@@ -33,6 +41,14 @@ public class StrictMethodMatcher implements MethodMatcher {
     }
 
 
+    /**
+     * 从目标类中匹配指定的方法
+     *
+     * @param targetClass
+     * @param methodName
+     * @param argTypes
+     * @throws NoSuchMethodException
+     */
     public StrictMethodMatcher(Class targetClass, String methodName, Class... argTypes) throws NoSuchMethodException {
         this(getExecuteWithLoadBalancerMethod(targetClass, methodName, argTypes));
     }
@@ -43,6 +59,7 @@ public class StrictMethodMatcher implements MethodMatcher {
         if (specimen != null) {
             return specimen.equals(method);
         }
+        //argTypes为null就不判断方法参数类型
         if (StringUtils.equals(methodName, method.getName())) {
             return argTypes == null || matchesParameterTypes(argTypes, method.getParameterTypes());
         }
@@ -60,6 +77,13 @@ public class StrictMethodMatcher implements MethodMatcher {
     }
 
 
+    /**
+     * 匹配方法参数
+     *
+     * @param argTypes
+     * @param parmeterTypes
+     * @return
+     */
     private boolean matchesParameterTypes(Class[] argTypes, Class[] parmeterTypes) {
         if (parmeterTypes.length != argTypes.length) {
             return false;
@@ -73,6 +97,15 @@ public class StrictMethodMatcher implements MethodMatcher {
     }
 
 
+    /**
+     * 从类结构中找到方法
+     *
+     * @param targetClass
+     * @param methodName
+     * @param argTypes
+     * @return
+     * @throws NoSuchMethodException
+     */
     private static Method getExecuteWithLoadBalancerMethod(Class targetClass, String methodName, Class[] argTypes) throws NoSuchMethodException {
         return targetClass.getMethod(methodName, argTypes);
     }

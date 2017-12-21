@@ -29,6 +29,12 @@ public class BambooExtConfigration {
 //    }
 
 
+    /**
+     * 添加AbstractLoadBalancerAwareClient代理，用于创建BambooLoadBalancerKey缓存到线程中
+     *
+     * @return
+     * @throws NoSuchMethodException
+     */
     @Bean
     public AdvisorAutoProxyCreator loadBalancerAwareClientProxyCreator() throws NoSuchMethodException {
         ComposablePointcut pointcut = new ComposablePointcut(new RootClassFilter(AbstractLoadBalancerAwareClient.class),
@@ -69,7 +75,6 @@ public class BambooExtConfigration {
                         BambooRequestContext.instance().removeByThreadLocal();
                     }
                 }
-
             }
             return invocation.proceed();
         }
