@@ -1,9 +1,6 @@
 package com.fm.client;
 
-import com.fm.cloud.bamboo.BambooConfiguration;
-import com.fm.cloud.bamboo.feign.BambooFeighConfiguration;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -21,8 +18,6 @@ import java.net.UnknownHostException;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-//@Import(BambooConfiguration.class)
-@ImportAutoConfiguration({BambooConfiguration.class, BambooFeighConfiguration.class})
 @EnableFeignClients
 public class EurekaClient2Application {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(EurekaClient2Application.class);

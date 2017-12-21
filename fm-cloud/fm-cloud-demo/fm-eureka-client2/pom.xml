@@ -32,7 +32,7 @@
         </dependency>
         <dependency>
             <groupId>com.fm</groupId>
-            <artifactId>fm-cloud-bamboo</artifactId>
+            <artifactId>fm-cloud-starter-bamboo</artifactId>
         </dependency>
 
 

@@ -19,6 +19,7 @@ import java.lang.reflect.Modifier;
 /**
  * Created by saleson on 2017/12/20.
  */
+@Deprecated
 public class LoadBalancerAwareClientBeanPostProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {

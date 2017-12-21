@@ -29,7 +29,7 @@ public class BambooRequestContext {
     }
 
 
-    static class Builder {
+    public static class Builder {
         private BambooLoadBalancerKey loadBalancerKey;
         private ClientRequest request;
 
