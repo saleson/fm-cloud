@@ -23,7 +23,7 @@ public class TestResource {
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, String> testGet(@RequestParam("version") String version) {
+    public Map<String, String> testGet(@RequestParam(value = "version", required = false) String version) {
         return ImmutableMap.of("test", "success.", "serverPort", env.getProperty("server.port"));
     }
 

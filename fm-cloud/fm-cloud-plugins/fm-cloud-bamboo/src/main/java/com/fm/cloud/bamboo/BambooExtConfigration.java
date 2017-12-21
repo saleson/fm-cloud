@@ -9,6 +9,7 @@ import com.netflix.client.ClientRequest;
 import com.netflix.client.config.IClientConfig;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.aop.support.ComposablePointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.RootClassFilter;
@@ -62,17 +63,19 @@ public class BambooExtConfigration {
 
                 RibbonCommandContext commandContext = ((ContextAwareRequest) request).getContext();
                 String apiVersion = commandContext.getParams().getFirst("version");
-                String serviceId = commandContext.getServiceId();
+                if (StringUtils.isNotEmpty(apiVersion)) {
+                    String serviceId = commandContext.getServiceId();
 
-                BambooLoadBalancerKey loadBalancerKey = BambooLoadBalancerKey.builder()
-                        .apiVersion(apiVersion).serviceId(serviceId).build();
-                BambooRequestContext.builder().request(request).loadBalancerKey(loadBalancerKey)
-                        .build().toThreadLocal();
-                try {
-                    return invocation.proceed();
-                } finally {
-                    if (BambooRequestContext.instance() != null) {
-                        BambooRequestContext.instance().removeByThreadLocal();
+                    BambooLoadBalancerKey loadBalancerKey = BambooLoadBalancerKey.builder()
+                            .apiVersion(apiVersion).serviceId(serviceId).build();
+                    BambooRequestContext.builder().request(request).loadBalancerKey(loadBalancerKey)
+                            .build().toThreadLocal();
+                    try {
+                        return invocation.proceed();
+                    } finally {
+                        if (BambooRequestContext.instance() != null) {
+                            BambooRequestContext.instance().removeByThreadLocal();
+                        }
                     }
                 }
             }

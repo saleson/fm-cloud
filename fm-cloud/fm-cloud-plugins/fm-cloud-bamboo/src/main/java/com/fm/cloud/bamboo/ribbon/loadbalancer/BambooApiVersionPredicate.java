@@ -19,27 +19,8 @@ public class BambooApiVersionPredicate extends AbstractServerPredicate {
 
     @Override
     public boolean apply(PredicateKey input) {
-//        if (input.getLoadBalancerKey() != null && input.getLoadBalancerKey() instanceof BambooLoadBalancerKey) {
-//            BambooLoadBalancerKey loadBalancerKey = (BambooLoadBalancerKey) input.getLoadBalancerKey();
-//            Map<String, String> serverMetadata = ((BambooZoneAvoidanceRule) this.rule)
-//                    .getServerMetadata(loadBalancerKey.getServiceId(), input.getServer());
-//            String versions = serverMetadata.get("versions");
-//            return matchVersion(versions, loadBalancerKey.getApiVersion());
-//        } else if (MapUtils.isNotEmpty(com.netflix.zuul.context.RequestContext.getCurrentContext())) {
-//            RequestContext requestContext = com.netflix.zuul.context.RequestContext.getCurrentContext();
-//            List<String> versionList = requestContext.getRequestQueryParams().get("version");
-//            String apiVersion = versionList.size() > 0 ? versionList.get(0) : null;
-//            String serviceId = (String) requestContext.get("serviceId");
-//            if (!StringUtils.isEmpty(apiVersion) && !StringUtils.isEmpty(serviceId)) {
-//                Map<String, String> serverMetadata = ((BambooZoneAvoidanceRule) this.rule)
-//                        .getServerMetadata(serviceId, input.getServer());
-//                String versions = serverMetadata.get("versions");
-//                return matchVersion(versions, apiVersion);
-//            }
-//        }
-
         BambooLoadBalancerKey loadBalancerKey = getBambooLoadBalancerKey(input);
-        if (loadBalancerKey != null) {
+        if (loadBalancerKey != null && !StringUtils.isEmpty(loadBalancerKey.getApiVersion())) {
             Map<String, String> serverMetadata = ((BambooZoneAvoidanceRule) this.rule)
                     .getServerMetadata(loadBalancerKey.getServiceId(), input.getServer());
             String versions = serverMetadata.get("versions");
