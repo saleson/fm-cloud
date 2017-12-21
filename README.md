@@ -56,5 +56,5 @@
       
  * fm-eureka-client2 
     
-    这个demo中有使用RestTemplate和Feign两种方式进行访问fm-dureka-client中的接口。
+    这个demo中也引入fm-cloud-bamboo，支持RestTemplate和Feign两种方式进行访问fm-dureka-client中的接口。
     
