@@ -5,8 +5,10 @@ package com.fm.cloud.bamboo.ribbon.loadbalancer;
  */
 public class BambooLoadBalancerKey {
 
+
     private String serviceId;
     private String apiVersion;
+
 
     private BambooLoadBalancerKey() {
 
