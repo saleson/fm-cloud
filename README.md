@@ -1,6 +1,7 @@
 # fm-cloud
 ## fm-cloud-bamboo: 基于spring cloud的接口多版本控制
 
+fm-cloud-bamboo支持RestTemplate、Feign、网关(Zuul)、断路器（hystrix,包括线程隔离）。
 在服务消费方的pom.xml文件中引入fm-cloud-starter-bamboo就可以集成了。
 
 ``` xml 
