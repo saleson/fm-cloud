@@ -1,6 +1,5 @@
 package com.fm.aop.spring.framework.autoproxy;
 
-import com.sun.javafx.UnmodifiableArrayList;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 
@@ -41,6 +40,6 @@ public class AdvisorAutoProxyCreator extends DefaultAdvisorAutoProxyCreator {
 
     @Override
     protected List<Advisor> findCandidateAdvisors() {
-        return new UnmodifiableArrayList<>(advisors.toArray(new Advisor[advisors.size()]), advisors.size());
+        return new ArrayList<>(advisors);
     }
 }
