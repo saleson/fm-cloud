@@ -16,6 +16,7 @@
     <modules>
         <module>fm-cloud-plugins</module>
         <module>fm-cloud-demo</module>
+        <module>fm-cloud-starter</module>
     </modules>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -38,6 +39,11 @@
             <dependency>
                 <groupId>com.fm</groupId>
                 <artifactId>fm-cloud-bamboo</artifactId>
+                <version>${fm-cloud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fm</groupId>
+                <artifactId>fm-cloud-starter-bamboo</artifactId>
                 <version>${fm-cloud.version}</version>
             </dependency>
         </dependencies>
