@@ -44,27 +44,14 @@
         at com.netflix.loadbalancer.LoadBalancerContext.getServerFromLoadBalancer(LoadBalancerContext.java:483) ~[ribbon-loadbalancer-2.2.2.jar:2.2.2]
         at com.netflix.loadbalancer.reactive.LoadBalancerCommand$1.call(LoadBalancerCommand.java:184) ~[ribbon-loadbalancer-2.2.2.jar:2.2.2]
         at com.netflix.loadbalancer.reactive.LoadBalancerCommand$1.call(LoadBalancerCommand.java:180) ~[ribbon-loadbalancer-2.2.2.jar:2.2.2]
-        at rx.Observable.unsafeSubscribe(Observable.java:10211) ~[rxjava-1.1.10.jar:1.1.10]
-        at rx.internal.operators.OnSubscribeConcatMap.call(OnSubscribeConcatMap.java:94) ~[rxjava-1.1.10.jar:1.1.10]
-        at rx.internal.operators.OnSubscribeConcatMap.call(OnSubscribeConcatMap.java:42) ~[rxjava-1.1.10.jar:1.1.10]
-        at rx.internal.operators.OnSubscribeLift.call(OnSubscribeLift.java:48) ~[rxjava-1.1.10.jar:1.1.10]
-        at rx.internal.operators.OnSubscribeLift.call(OnSubscribeLift.java:30) ~[rxjava-1.1.10.jar:1.1.10]
-        at rx.internal.operators.OnSubscribeLift.call(OnSubscribeLift.java:48) ~[rxjava-1.1.10.jar:1.1.10]
-        at rx.internal.operators.OnSubscribeLift.call(OnSubscribeLift.java:30) ~[rxjava-1.1.10.jar:1.1.10]
-        at rx.Observable.subscribe(Observable.java:10307) ~[rxjava-1.1.10.jar:1.1.10]
-        at rx.Observable.subscribe(Observable.java:10274) ~[rxjava-1.1.10.jar:1.1.10]
-        at rx.observables.BlockingObservable.blockForSingle(BlockingObservable.java:445) ~[rxjava-1.1.10.jar:1.1.10]
-        at rx.observables.BlockingObservable.single(BlockingObservable.java:342) ~[rxjava-1.1.10.jar:1.1.10]
+        ...
         at com.netflix.client.AbstractLoadBalancerAwareClient.executeWithLoadBalancer(AbstractLoadBalancerAwareClient.java:117) ~[ribbon-loadbalancer-2.2.2.jar:2.2.2]
         at com.netflix.client.AbstractLoadBalancerAwareClient$$FastClassBySpringCGLIB$$c930f31.invoke(<generated>) ~[ribbon-loadbalancer-2.2.2.jar:2.2.2]
         at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204) ~[spring-core-4.3.9.RELEASE.jar:4.3.9.RELEASE]
         at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:738) ~[spring-aop-4.3.9.RELEASE.jar:4.3.9.RELEASE]
         at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157) ~[spring-aop-4.3.9.RELEASE.jar:4.3.9.RELEASE]
         at com.fm.cloud.bamboo.BambooExtConfigration$ExecuteWithLoadBalancerMethodInterceptor.invoke(BambooExtConfigration.java:72) ~[classes/:na]
-        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:168) ~[spring-aop-4.3.9.RELEASE.jar:4.3.9.RELEASE]
-        at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:673) ~[spring-aop-4.3.9.RELEASE.jar:4.3.9.RELEASE]
-        at org.springframework.cloud.netflix.ribbon.apache.RibbonLoadBalancingHttpClient$$EnhancerBySpringCGLIB$$eb0cd50d.executeWithLoadBalancer(<generated>) ~[spring-cloud-netflix-core-1.3.0.RELEASE.jar:1.3.0.RELEASE]
-        at org.springframework.cloud.netflix.zuul.filters.route.support.AbstractRibbonCommand.run(AbstractRibbonCommand.java:105) ~[spring-cloud-netflix-core-1.3.0.RELEASE.jar:1.3.0.RELEASE]
+        ...
       ```
       
  * fm-eureka-client2 
