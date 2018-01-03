@@ -5,15 +5,14 @@ server:
   port: 10102
 eureka:
   client:
-#    enabled: true
     register-with-eureka: true
     fetch-registry: true
+    region: double
+    availabilityZones:
+      double: defaultZone,serverZone
     serviceUrl:
-#      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
       defaultZone: http://localhost:10002/eureka/
-  instance:
-    metadata-map:
-      zone: test1
+      serverZone: http://localhost:10001/eureka/
 feign:
   hystrix:
     enabled: true

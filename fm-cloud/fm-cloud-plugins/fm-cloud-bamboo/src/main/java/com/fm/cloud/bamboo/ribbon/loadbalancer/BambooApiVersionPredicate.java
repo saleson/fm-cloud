@@ -1,5 +1,6 @@
 package com.fm.cloud.bamboo.ribbon.loadbalancer;
 
+import com.fm.cloud.bamboo.BambooRequest;
 import com.fm.cloud.bamboo.ribbon.BambooRequestContext;
 import com.netflix.loadbalancer.AbstractServerPredicate;
 import com.netflix.loadbalancer.PredicateKey;
@@ -13,12 +14,14 @@ import java.util.Map;
  */
 public class BambooApiVersionPredicate extends AbstractServerPredicate {
 
+
     public BambooApiVersionPredicate(BambooZoneAvoidanceRule rule) {
         super(rule);
     }
 
     @Override
     public boolean apply(PredicateKey input) {
+        System.out.println("BambooApiVersionPredicate\n\n\n");
         BambooLoadBalancerKey loadBalancerKey = getBambooLoadBalancerKey(input);
         if (loadBalancerKey != null && !StringUtils.isEmpty(loadBalancerKey.getApiVersion())) {
             Map<String, String> serverMetadata = ((BambooZoneAvoidanceRule) this.rule)
@@ -34,6 +37,13 @@ public class BambooApiVersionPredicate extends AbstractServerPredicate {
             return (BambooLoadBalancerKey) input.getLoadBalancerKey();
         } else if (BambooRequestContext.instance() != null) {
             return BambooRequestContext.instance().getLoadBalancerKey();
+        } else if(com.fm.cloud.bamboo.BambooRequestContext.currentRequestCentxt()!=null){
+            com.fm.cloud.bamboo.BambooRequestContext bambooRequestContext = com.fm.cloud.bamboo.BambooRequestContext.currentRequestCentxt();
+            String apiVersion = bambooRequestContext.getApiVersion();
+            if(!StringUtils.isEmpty(apiVersion)){
+                return BambooLoadBalancerKey.builder().apiVersion(apiVersion)
+                        .serviceId(bambooRequestContext.getServiceId()).build();
+            }
         }
         return null;
     }

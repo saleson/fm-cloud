@@ -1,6 +1,7 @@
 package com.fm.cloud.bamboo.ribbon.loadbalancer;
 
 import com.fm.cloud.bamboo.ribbon.BambooRibbonLoadBalancerClient;
+import com.fm.cloud.bamboo.ribbon.EurekaServerExtractor;
 import com.netflix.loadbalancer.AbstractServerPredicate;
 import com.netflix.loadbalancer.CompositePredicate;
 import com.netflix.loadbalancer.Server;
@@ -15,15 +16,14 @@ import java.util.Map;
 public class BambooZoneAvoidanceRule extends ZoneAvoidanceRule {
 
     private CompositePredicate compositePredicate;
-    private BambooRibbonLoadBalancerClient loadBalancerClient;
+    private EurekaServerExtractor eurekaServerExtractor;
 
     public BambooZoneAvoidanceRule() {
-        this(null);
     }
 
-    public BambooZoneAvoidanceRule(BambooRibbonLoadBalancerClient loadBalancerClient) {
+    public BambooZoneAvoidanceRule(EurekaServerExtractor eurekaServerExtractor) {
         super();
-        this.loadBalancerClient = loadBalancerClient;
+        this.eurekaServerExtractor = eurekaServerExtractor;
         BambooApiVersionPredicate apiVersionPredicate = new BambooApiVersionPredicate(this);
         compositePredicate = CompositePredicate.withPredicates(super.getPredicate(),
                 apiVersionPredicate).build();
@@ -36,11 +36,11 @@ public class BambooZoneAvoidanceRule extends ZoneAvoidanceRule {
 
 
     public Map<String, String> getServerMetadata(String serviceId, Server server) {
-        return loadBalancerClient.serverIntrospector(serviceId).getMetadata(server);
+        return eurekaServerExtractor.getServerMetadata(serviceId, server);
     }
 
     @Autowired
-    public void setLoadBalancerClient(BambooRibbonLoadBalancerClient loadBalancerClient) {
-        this.loadBalancerClient = loadBalancerClient;
+    public void setEurekaServerExtractor(EurekaServerExtractor eurekaServerExtractor) {
+        this.eurekaServerExtractor = eurekaServerExtractor;
     }
 }

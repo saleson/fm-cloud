@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * Created by saleson on 2017/11/10.
  */
+@Deprecated
 public class BambooLoadBalancerRequestFactory extends LoadBalancerRequestFactory {
     public BambooLoadBalancerRequestFactory(LoadBalancerClient loadBalancer, List<LoadBalancerRequestTransformer> transformers) {
         super(loadBalancer, transformers);

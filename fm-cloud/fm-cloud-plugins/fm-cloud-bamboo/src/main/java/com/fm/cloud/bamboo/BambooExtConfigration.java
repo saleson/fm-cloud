@@ -21,6 +21,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by saleson on 2017/12/21.
  */
+@Deprecated
 @Configuration
 public class BambooExtConfigration {
 

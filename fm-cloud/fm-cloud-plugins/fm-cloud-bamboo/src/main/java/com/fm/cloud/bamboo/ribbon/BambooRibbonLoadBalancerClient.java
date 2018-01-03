@@ -18,6 +18,7 @@ import java.io.IOException;
 /**
  * Created by saleson on 2017/11/10.
  */
+@Deprecated
 public class BambooRibbonLoadBalancerClient extends RibbonLoadBalancerClient {
 
     private SpringClientFactory clientFactory;

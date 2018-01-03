@@ -55,4 +55,28 @@ public class TestResource {
         }
     }
 
+
+    @RequestMapping(value = "/post", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, String> testPost(@RequestParam(value = "version", required = false) String version) {
+        Map map = testClient.testPost(version);
+        if (map != null) {
+            return map;
+        } else {
+            return ImmutableMap.of("test2", "success.");
+        }
+    }
+
+
+    @RequestMapping(value = "/post2", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, String> testPost2(@RequestParam(value = "version", required = false) String version) {
+        Map map = testClient.testPost2(version);
+        if (map != null) {
+            return map;
+        } else {
+            return ImmutableMap.of("test2", "success.");
+        }
+    }
+
 }

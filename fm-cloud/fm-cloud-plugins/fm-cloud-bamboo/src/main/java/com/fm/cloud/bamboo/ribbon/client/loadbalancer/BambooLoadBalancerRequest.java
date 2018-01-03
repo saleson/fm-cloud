@@ -6,6 +6,7 @@ import org.springframework.cloud.client.loadbalancer.LoadBalancerRequest;
 /**
  * Created by saleson on 2017/11/10.
  */
+@Deprecated
 public class BambooLoadBalancerRequest<T> implements LoadBalancerRequest<T> {
 
     private LoadBalancerRequest<T> request;
