@@ -1,5 +1,9 @@
-package com.fm.cloud.bamboo;
+package com.fm.cloud.bamboo.config;
 
+import com.fm.DefaultRibbonConnectionPoint;
+import com.fm.cloud.bamboo.BambooInitializingBean;
+import com.fm.cloud.bamboo.BambooRibbonConnectionPoint;
+import com.fm.cloud.bamboo.RequestVersionExtractor;
 import com.fm.cloud.bamboo.feign.BambooFeighConfiguration;
 import com.fm.cloud.bamboo.ribbon.BambooClientHttpRequestIntercptor;
 import com.fm.cloud.bamboo.ribbon.BambooRibbonLoadBalancerClient;
@@ -10,6 +14,7 @@ import com.netflix.client.config.IClientConfig;
 import com.netflix.loadbalancer.IRule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
@@ -110,6 +115,25 @@ public class BambooConfiguration {
         BambooZoneAvoidanceRule rule = new BambooZoneAvoidanceRule(eurekaServerExtractor);
         rule.initWithNiwsConfig(config);
         return rule;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public RequestVersionExtractor requestVersionExtractor(){
+        return new RequestVersionExtractor.Default();
+    }
+
+
+    @Bean
+    @ConditionalOnMissingBean
+    public BambooRibbonConnectionPoint bambooRibbonConnectionPoint(
+            RequestVersionExtractor requestVersionExtractor){
+        return new DefaultRibbonConnectionPoint(requestVersionExtractor);
+    }
+
+    @Bean
+    public BambooInitializingBean bambooInitializingBean(){
+        return new BambooInitializingBean();
     }
 
 }

@@ -1,7 +1,9 @@
 package com.fm.cloud.bamboo.feign.ribbon;
 
+import com.fm.cloud.bamboo.BambooAppContext;
 import com.fm.cloud.bamboo.BambooRequest;
 import com.fm.cloud.bamboo.BambooRequestContext;
+import com.fm.cloud.bamboo.ConnectPointContext;
 import com.fm.utils.WebUtils;
 import feign.Client;
 import feign.Request;
@@ -37,12 +39,14 @@ public class BambooFeignClient implements Client {
             }
         });
 
-        BambooRequest bambooRequest = builder.build();
-        BambooRequestContext.initRequestContext(bambooRequest, bambooRequest.getParams().getFirst("version"));
+        ConnectPointContext connectPointContext = ConnectPointContext.builder().bambooRequest(builder.build()).build();
+
+        BambooAppContext.getBambooRibbonConnectionPoint().executeConnectPoint(connectPointContext);
+//        BambooRequestContext.initRequestContext(bambooRequest, bambooRequest.getParams().getFirst("version"));
         try {
             return delegate.execute(request, options);
         }finally {
-            BambooRequestContext.shutdownRequestContext();
+            BambooAppContext.getBambooRibbonConnectionPoint().shutdownconnectPoint();
         }
     }
 }

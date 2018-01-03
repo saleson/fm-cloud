@@ -1,4 +1,4 @@
-package com.fm.cloud.bamboo;
+package com.fm.cloud.bamboo.config;
 
 import com.fm.aop.spring.StrictMethodMatcher;
 import com.fm.aop.spring.framework.autoproxy.AdvisorAutoProxyCreator;

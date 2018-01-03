@@ -1,5 +1,5 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-	com.fm.cloud.bamboo.BambooConfiguration,\
+	com.fm.cloud.bamboo.config.BambooConfiguration,\
     com.fm.cloud.bamboo.feign.BambooFeighConfiguration,\
     com.fm.cloud.bamboo.zuul.BambooZuulConfiguration

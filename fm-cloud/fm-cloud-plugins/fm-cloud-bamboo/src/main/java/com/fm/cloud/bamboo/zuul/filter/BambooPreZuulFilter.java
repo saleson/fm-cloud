@@ -1,6 +1,8 @@
 package com.fm.cloud.bamboo.zuul.filter;
 
+import com.fm.cloud.bamboo.BambooAppContext;
 import com.fm.cloud.bamboo.BambooRequest;
+import com.fm.cloud.bamboo.ConnectPointContext;
 import com.netflix.util.Pair;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
@@ -38,9 +40,10 @@ public class BambooPreZuulFilter extends ZuulFilter{
                 .addHeaders(context.getOriginResponseHeaders().stream().collect(Collectors.toMap(Pair::first, Pair::second)));
         context.getOriginResponseHeaders().forEach(pair-> builder.addHeader(pair.first(), pair.second()));
 
-        BambooRequest bambooRequest = builder.build();
+        ConnectPointContext connectPointContext = ConnectPointContext.builder().bambooRequest(builder.build()).build();
 
-        com.fm.cloud.bamboo.BambooRequestContext.initRequestContext(bambooRequest, bambooRequest.getParams().getFirst("version"));
+        BambooAppContext.getBambooRibbonConnectionPoint().executeConnectPoint(connectPointContext);
+//        com.fm.cloud.bamboo.BambooRequestContext.initRequestContext(bambooRequest, bambooRequest.getParams().getFirst("version"));
         return null;
     }
 }

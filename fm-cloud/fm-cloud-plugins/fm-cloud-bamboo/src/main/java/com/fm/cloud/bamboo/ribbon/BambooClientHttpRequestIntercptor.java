@@ -1,7 +1,9 @@
 package com.fm.cloud.bamboo.ribbon;
 
+import com.fm.cloud.bamboo.BambooAppContext;
 import com.fm.cloud.bamboo.BambooRequest;
 import com.fm.cloud.bamboo.BambooRequestContext;
+import com.fm.cloud.bamboo.ConnectPointContext;
 import com.fm.utils.WebUtils;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
@@ -27,11 +29,12 @@ public class BambooClientHttpRequestIntercptor implements ClientHttpRequestInter
                 .addMultiParams(WebUtils.getQueryParams(uri.getQuery()))
                 .build();
 
-        BambooRequestContext.initRequestContext(bambooRequest, bambooRequest.getParams().getFirst("version"));
+        ConnectPointContext connectPointContext = ConnectPointContext.builder().bambooRequest(bambooRequest).build();
+        BambooAppContext.getBambooRibbonConnectionPoint().executeConnectPoint(connectPointContext);
         try {
             return execution.execute(request, body);
         }finally {
-            BambooRequestContext.shutdownRequestContext();
+            BambooAppContext.getBambooRibbonConnectionPoint().shutdownconnectPoint();
         }
     }
 

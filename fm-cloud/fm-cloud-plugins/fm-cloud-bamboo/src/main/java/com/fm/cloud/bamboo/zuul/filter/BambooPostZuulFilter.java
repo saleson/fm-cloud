@@ -1,5 +1,6 @@
 package com.fm.cloud.bamboo.zuul.filter;
 
+import com.fm.cloud.bamboo.BambooAppContext;
 import com.fm.cloud.bamboo.BambooRequestContext;
 import com.netflix.zuul.ZuulFilter;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
@@ -25,7 +26,8 @@ public class BambooPostZuulFilter extends ZuulFilter {
 
     @Override
     public Object run() {
-        BambooRequestContext.shutdownRequestContext();
+//        BambooRequestContext.shutdownRequestContext();
+        BambooAppContext.getBambooRibbonConnectionPoint().shutdownconnectPoint();
         return null;
     }
 }
