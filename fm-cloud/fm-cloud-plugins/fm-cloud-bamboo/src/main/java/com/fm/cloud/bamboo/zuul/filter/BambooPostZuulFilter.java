@@ -2,6 +2,7 @@ package com.fm.cloud.bamboo.zuul.filter;
 
 import com.fm.cloud.bamboo.BambooRequestContext;
 import com.netflix.zuul.ZuulFilter;
+import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 
 /**
  * 做一些善后工作。比如删除BambooRequestContext在ThreadLocal中的信息。
@@ -9,7 +10,7 @@ import com.netflix.zuul.ZuulFilter;
 public class BambooPostZuulFilter extends ZuulFilter {
     @Override
     public String filterType() {
-        return "post";
+        return FilterConstants.POST_TYPE;
     }
 
     @Override
