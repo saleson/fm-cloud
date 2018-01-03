@@ -48,7 +48,12 @@ public class BambooApiVersionPredicate extends AbstractServerPredicate {
         return null;
     }
 
-
+    /**
+     * 匹配api version
+     * @param serverVersions
+     * @param apiVersion
+     * @return
+     */
     private boolean matchVersion(String serverVersions, String apiVersion) {
         if (StringUtils.isEmpty(serverVersions)) {
             return false;

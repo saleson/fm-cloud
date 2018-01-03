@@ -7,6 +7,9 @@ import org.springframework.cloud.netflix.ribbon.SpringClientFactory;
 
 import java.util.Map;
 
+/**
+ * 获取服务实例的相关信息
+ */
 public class EurekaServerExtractor {
 
 
@@ -25,6 +28,13 @@ public class EurekaServerExtractor {
         return serverIntrospector;
     }
 
+    /**
+     * 获取实例的metadata信息
+     *
+     * @param serviceId
+     * @param server
+     * @return
+     */
     public Map<String, String> getServerMetadata(String serviceId, Server server) {
         return serverIntrospector(serviceId).getMetadata(server);
     }

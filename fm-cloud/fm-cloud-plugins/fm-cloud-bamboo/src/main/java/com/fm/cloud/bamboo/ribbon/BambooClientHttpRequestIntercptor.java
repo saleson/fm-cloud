@@ -11,6 +11,10 @@ import org.springframework.http.client.ClientHttpResponse;
 import java.io.IOException;
 import java.net.URI;
 
+
+/**
+ * 用于@LoadBalance 标记的 RestTemplate，主要作用是用来获取request的相关信息，为后面的路由提供数据基础。
+ */
 public class BambooClientHttpRequestIntercptor implements ClientHttpRequestInterceptor{
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {

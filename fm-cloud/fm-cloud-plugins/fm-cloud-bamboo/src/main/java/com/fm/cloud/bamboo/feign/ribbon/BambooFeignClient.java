@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 
+/**
+ * 主要作用是用来获取request的相关信息，为后面的路由提供数据基础。
+ */
 public class BambooFeignClient implements Client {
 
     private Client delegate;
