@@ -32,11 +32,11 @@ public class BambooApiVersionPredicate extends AbstractServerPredicate {
     }
 
     private BambooLoadBalancerKey getBambooLoadBalancerKey(PredicateKey input) {
-        if (input.getLoadBalancerKey() != null && input.getLoadBalancerKey() instanceof BambooLoadBalancerKey) {
+        /*if (input.getLoadBalancerKey() != null && input.getLoadBalancerKey() instanceof BambooLoadBalancerKey) {
             return (BambooLoadBalancerKey) input.getLoadBalancerKey();
         } else if (BambooRequestContext.instance() != null) {
             return BambooRequestContext.instance().getLoadBalancerKey();
-        } else if(com.fm.cloud.bamboo.BambooRequestContext.currentRequestCentxt()!=null){
+        } else */if(com.fm.cloud.bamboo.BambooRequestContext.currentRequestCentxt()!=null){
             com.fm.cloud.bamboo.BambooRequestContext bambooRequestContext = com.fm.cloud.bamboo.BambooRequestContext.currentRequestCentxt();
             String apiVersion = bambooRequestContext.getApiVersion();
             if(!StringUtils.isEmpty(apiVersion)){

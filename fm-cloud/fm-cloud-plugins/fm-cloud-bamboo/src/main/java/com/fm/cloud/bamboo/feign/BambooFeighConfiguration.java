@@ -14,28 +14,4 @@ import org.springframework.context.annotation.Configuration;
 @EnableFeignClients(defaultConfiguration = {BambooFeighClientsConfiguration.class})
 public class BambooFeighConfiguration {
 
-
-//    @Bean
-//    @Primary
-////    @ConditionalOnMissingClass("org.springframework.retry.support.RetryTemplate")
-//    public BambooCachingSpringLoadBalancerFactory bambooCachingLBClientFactory(
-//            SpringClientFactory factory) {
-//        return new BambooCachingSpringLoadBalancerFactory(factory);
-//    }
-
-//    @Bean
-//    @Primary
-//    @ConditionalOnClass(name = "org.springframework.retry.support.RetryTemplate")
-//    public BambooCachingSpringLoadBalancerFactory retryabeCachingLBClientFactory(
-//            SpringClientFactory factory, LoadBalancedRetryPolicyFactory retryPolicyFactory) {
-//        return new BambooCachingSpringLoadBalancerFactory(factory, retryPolicyFactory, true);
-//    }
-
-//    @Bean
-//    @Primary
-//    public Client feignClient(BambooCachingSpringLoadBalancerFactory cachingFactory,
-//                              SpringClientFactory clientFactory) {
-//        return new LoadBalancerFeignClient(new Client.Default(null, null),
-//                cachingFactory, clientFactory);
-//    }
 }

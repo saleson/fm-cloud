@@ -1,13 +1,12 @@
 package com.fm.cloud.bamboo.ribbon.loadbalancer;
 
 import com.fm.cloud.bamboo.BambooAppContext;
-import com.fm.cloud.bamboo.ribbon.BambooRibbonLoadBalancerClient;
-import com.fm.cloud.bamboo.ribbon.EurekaServerExtractor;
+import com.fm.cloud.bamboo.BambooRequestContext;
 import com.netflix.loadbalancer.AbstractServerPredicate;
 import com.netflix.loadbalancer.CompositePredicate;
 import com.netflix.loadbalancer.Server;
 import com.netflix.loadbalancer.ZoneAvoidanceRule;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
 import java.util.Map;
 
@@ -16,18 +15,22 @@ import java.util.Map;
  */
 public class BambooZoneAvoidanceRule extends ZoneAvoidanceRule {
 
-    private CompositePredicate compositePredicate;
+    private CompositePredicate bambooCompositePredicate;
 
     public BambooZoneAvoidanceRule() {
         super();
         BambooApiVersionPredicate apiVersionPredicate = new BambooApiVersionPredicate(this);
-        compositePredicate = CompositePredicate.withPredicates(super.getPredicate(),
+        bambooCompositePredicate = CompositePredicate.withPredicates(super.getPredicate(),
                 apiVersionPredicate).build();
     }
 
     @Override
     public AbstractServerPredicate getPredicate() {
-        return compositePredicate;
+        BambooRequestContext requestContext = BambooRequestContext.currentRequestCentxt();
+        if(requestContext==null || StringUtils.isEmpty(requestContext.getApiVersion())){
+            return super.getPredicate();
+        }
+        return bambooCompositePredicate;
     }
 
 

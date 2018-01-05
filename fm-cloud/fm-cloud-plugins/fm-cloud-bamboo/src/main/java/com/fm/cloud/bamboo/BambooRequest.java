@@ -46,12 +46,16 @@ public class BambooRequest {
         }
 
         public Builder params(MultiValueMap<String, String> params){
-            this.params = params;
+            if(params!=null) {
+                this.params = params;
+            }
             return this;
         }
 
         public Builder addParams(Map<String, String> params){
-            this.params.setAll(params);
+            if(params!=null) {
+                this.params.setAll(params);
+            }
             return this;
         }
 
@@ -61,22 +65,30 @@ public class BambooRequest {
         }
 
         public Builder addMultiParams(Map<String,List<String>> params){
-            this.params.putAll(params);
+            if(params!=null) {
+                this.params.putAll(params);
+            }
             return this;
         }
 
         public Builder headers(MultiValueMap<String, String> headers){
-            this.headers = headers;
+            if(headers!=null) {
+                this.headers = headers;
+            }
             return this;
         }
 
         public Builder addHeaders(Map<String, String> headers){
-            this.headers.setAll(headers);
+            if(headers!=null) {
+                this.headers.setAll(headers);
+            }
             return this;
         }
 
         public Builder addMultiHeaders(Map<String,List<String>> headers){
-            this.headers.putAll(headers);
+            if(headers!=null) {
+                this.headers.putAll(headers);
+            }
             return this;
         }
 
