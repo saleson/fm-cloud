@@ -1,5 +1,6 @@
 package com.fm.cloud.bamboo;
 
+import com.fm.cloud.bamboo.ribbon.EurekaServerExtractor;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
@@ -13,6 +14,7 @@ public class BambooInitializingBean implements InitializingBean, ApplicationCont
     @Override
     public void afterPropertiesSet() {
         BambooAppContext.setDefaultConnectionPoint(ctx.getBean(BambooRibbonConnectionPoint.class));
+        BambooAppContext.setEurekaServerExtractor(ctx.getBean(EurekaServerExtractor.class));
     }
 
     @Override

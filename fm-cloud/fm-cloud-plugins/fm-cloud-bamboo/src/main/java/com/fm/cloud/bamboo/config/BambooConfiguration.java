@@ -30,62 +30,16 @@ import java.util.List;
 //@RibbonClients(defaultConfiguration = {BambooExtConfigration.class})
 public class BambooConfiguration {
 
-//    @Autowired
-//    private PropertiesFactory propertiesFactory;
-//
-//    @Autowired(required = false)
-//    private List<RibbonClientSpecification> configurations = new ArrayList<RibbonClientSpecification>();
-//
-//    @Autowired(required = false)
-//    private List<LoadBalancerRequestTransformer> transformers = Collections.emptyList();
-//
-//
-//    //    @Value("${ribbon.client.name}")
-////    private String name = "client";
     @Autowired(required = false)
     private IClientConfig config;
 
     @Autowired
     private SpringClientFactory springClientFactory;
-//
-//
-//    @Bean
-//    @Primary
-//    public SpringClientFactory springClientFactory() {
-//        SpringClientFactory factory = new SpringClientFactory();
-//        factory.setConfigurations(this.configurations);
-//        return factory;
-//    }
-//
-//    @Bean
-////    @ConditionalOnMissingBean(LoadBalancerClient.class)
-//    public BambooRibbonLoadBalancerClient loadBalancerClient(SpringClientFactory springClientFactory) {
-//        return new BambooRibbonLoadBalancerClient(springClientFactory);
-//    }
 
 
-//    @Bean
-////    @ConditionalOnMissingBean
-//    public IRule ribbonRule(BambooRibbonLoadBalancerClient loadBalancerClient) {
-////        if (this.propertiesFactory.isSet(IRule.class, name)) {
-////            return this.propertiesFactory.get(IRule.class, config, name);
-////        }
-//        BambooZoneAvoidanceRule rule = new BambooZoneAvoidanceRule(loadBalancerClient);
-//        rule.initWithNiwsConfig(config);
-//        return rule;
-//    }
 
-
-//    @Bean
-////    @ConditionalOnMissingBean
-//    public LoadBalancerRequestFactory loadBalancerRequestFactory(
-//            LoadBalancerClient loadBalancerClient) {
-//        return new BambooLoadBalancerRequestFactory(loadBalancerClient, transformers);
-//    }
-
-
-    @LoadBalanced
     @Bean
+    @LoadBalanced
     public RestTemplate restTemplate() {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getInterceptors().add(new BambooClientHttpRequestIntercptor());
@@ -93,14 +47,15 @@ public class BambooConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public EurekaServerExtractor eurekaServerExtractor(){
         return new EurekaServerExtractor(springClientFactory);
     }
 
 
     @Bean
-    public IRule ribbonRule(EurekaServerExtractor eurekaServerExtractor) {
-        BambooZoneAvoidanceRule rule = new BambooZoneAvoidanceRule(eurekaServerExtractor);
+    public IRule ribbonRule() {
+        BambooZoneAvoidanceRule rule = new BambooZoneAvoidanceRule();
         rule.initWithNiwsConfig(config);
         return rule;
     }
