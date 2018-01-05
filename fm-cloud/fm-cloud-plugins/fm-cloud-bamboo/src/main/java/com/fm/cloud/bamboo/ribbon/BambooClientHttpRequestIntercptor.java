@@ -30,8 +30,8 @@ public class BambooClientHttpRequestIntercptor implements ClientHttpRequestInter
                 .build();
 
         ConnectPointContext connectPointContext = ConnectPointContext.builder().bambooRequest(bambooRequest).build();
-        BambooAppContext.getBambooRibbonConnectionPoint().executeConnectPoint(connectPointContext);
         try {
+            BambooAppContext.getBambooRibbonConnectionPoint().executeConnectPoint(connectPointContext);
             return execution.execute(request, body);
         }finally {
             BambooAppContext.getBambooRibbonConnectionPoint().shutdownconnectPoint();

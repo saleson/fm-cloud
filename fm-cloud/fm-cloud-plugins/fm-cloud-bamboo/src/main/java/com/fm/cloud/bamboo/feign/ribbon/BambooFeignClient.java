@@ -41,9 +41,8 @@ public class BambooFeignClient implements Client {
 
         ConnectPointContext connectPointContext = ConnectPointContext.builder().bambooRequest(builder.build()).build();
 
-        BambooAppContext.getBambooRibbonConnectionPoint().executeConnectPoint(connectPointContext);
-//        BambooRequestContext.initRequestContext(bambooRequest, bambooRequest.getParams().getFirst("version"));
         try {
+            BambooAppContext.getBambooRibbonConnectionPoint().executeConnectPoint(connectPointContext);
             return delegate.execute(request, options);
         }finally {
             BambooAppContext.getBambooRibbonConnectionPoint().shutdownconnectPoint();

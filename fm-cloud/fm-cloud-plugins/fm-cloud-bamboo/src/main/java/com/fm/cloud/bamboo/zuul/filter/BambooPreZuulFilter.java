@@ -43,7 +43,6 @@ public class BambooPreZuulFilter extends ZuulFilter{
         ConnectPointContext connectPointContext = ConnectPointContext.builder().bambooRequest(builder.build()).build();
 
         BambooAppContext.getBambooRibbonConnectionPoint().executeConnectPoint(connectPointContext);
-//        com.fm.cloud.bamboo.BambooRequestContext.initRequestContext(bambooRequest, bambooRequest.getParams().getFirst("version"));
         return null;
     }
 }
