@@ -21,7 +21,6 @@ public class BambooApiVersionPredicate extends AbstractServerPredicate {
 
     @Override
     public boolean apply(PredicateKey input) {
-        System.out.println("BambooApiVersionPredicate\n\n\n");
         BambooLoadBalancerKey loadBalancerKey = getBambooLoadBalancerKey(input);
         if (loadBalancerKey != null && !StringUtils.isEmpty(loadBalancerKey.getApiVersion())) {
             Map<String, String> serverMetadata = ((BambooZoneAvoidanceRule) this.rule)
