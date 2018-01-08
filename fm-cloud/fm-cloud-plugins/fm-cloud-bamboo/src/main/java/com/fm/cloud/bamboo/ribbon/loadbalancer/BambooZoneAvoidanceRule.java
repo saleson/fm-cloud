@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class BambooZoneAvoidanceRule extends ZoneAvoidanceRule {
 
-    private CompositePredicate bambooCompositePredicate;
+    protected CompositePredicate bambooCompositePredicate;
 
     public BambooZoneAvoidanceRule() {
         super();

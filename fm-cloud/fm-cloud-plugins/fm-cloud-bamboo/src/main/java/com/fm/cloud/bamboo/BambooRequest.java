@@ -9,15 +9,18 @@ import java.util.Map;
 public class BambooRequest {
     private final String uri;
     private final String serviceId;
+    private final String ip;
     private final MultiValueMap<String, String> params;
     private final MultiValueMap<String, String> headers;
 
 
-    private BambooRequest(String uri, String serviceId, MultiValueMap<String, String> params, MultiValueMap<String, String> headers) {
+    private BambooRequest(String uri, String serviceId, String ip, MultiValueMap<String, String> params, MultiValueMap<String, String> headers) {
         this.uri = uri;
         this.serviceId = serviceId;
         this.params = params;
         this.headers = headers;
+        this.ip = ip;
+
     }
 
 
@@ -28,12 +31,19 @@ public class BambooRequest {
     public static class Builder{
         private String uri;
         private String serviceId;
+        private String ip;
         private MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         private MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         private Builder(){
 
         }
 
+
+
+        public Builder ip(String ip){
+            this.ip = ip;
+            return this;
+        }
 
         public Builder uri(String uri){
             this.uri = uri;
@@ -99,7 +109,7 @@ public class BambooRequest {
 
 
         public BambooRequest build() {
-            return new BambooRequest(uri, serviceId, params, headers);
+            return new BambooRequest(uri, serviceId, ip, params, headers);
         }
     }
 
