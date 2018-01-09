@@ -49,7 +49,7 @@
             </dependency>
             <dependency>
                 <groupId>com.fm</groupId>
-                <artifactId>fm-cloud-gray-bunny-core</artifactId>
+                <artifactId>fm-cloud-graybunny</artifactId>
                 <version>${fm-cloud.version}</version>
             </dependency>
             <dependency>

@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>fm-cloud-bamboo</module>
-        <module>fm-cloud-gray-bunny-core</module>
+        <module>fm-cloud-graybunny</module>
     </modules>
 
 

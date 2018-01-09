@@ -9,10 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>fm-cloud-gray-bunny-core</artifactId>
+    <artifactId>fm-cloud-graybunny</artifactId>
 
     <dependencies>
-
         <dependency>
             <groupId>com.fm</groupId>
             <artifactId>fm-cloud-bamboo</artifactId>
