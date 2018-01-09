@@ -30,6 +30,12 @@ import java.util.List;
 //@RibbonClients(defaultConfiguration = {BambooExtConfigration.class})
 public class BambooConfiguration {
 
+
+    public static class UnUseBambooIRule{
+
+    }
+
+
     @Autowired(required = false)
     private IClientConfig config;
 
@@ -54,6 +60,7 @@ public class BambooConfiguration {
 
 
     @Bean
+    @ConditionalOnMissingBean(value = {BambooConfiguration.UnUseBambooIRule.class})
     public IRule ribbonRule() {
         BambooZoneAvoidanceRule rule = new BambooZoneAvoidanceRule();
         rule.initWithNiwsConfig(config);

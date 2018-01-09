@@ -9,9 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>fm-eureka-client2</artifactId>
-    <packaging>war</packaging>
-
+    <artifactId>fm-graybunny-server</artifactId>
 
     <dependencies>
         <dependency>
@@ -40,9 +38,8 @@
         </dependency>
         <dependency>
             <groupId>com.fm</groupId>
-            <artifactId>fm-cloud-gray-bunny-core</artifactId>
+            <artifactId>fm-cloud-starter-graybunny-server</artifactId>
         </dependency>
-
 
     </dependencies>
 

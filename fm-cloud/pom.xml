@@ -24,6 +24,7 @@
         <java.version>1.8</java.version>
         <spring-cloud.version>Dalston.RELEASE</spring-cloud.version>
         <fm-cloud.version>1.0-SNAPSHOT</fm-cloud.version>
+        <springfox.version>2.6.1</springfox.version>
     </properties>
 
     <dependencyManagement>
@@ -45,6 +46,44 @@
                 <groupId>com.fm</groupId>
                 <artifactId>fm-cloud-starter-bamboo</artifactId>
                 <version>${fm-cloud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fm</groupId>
+                <artifactId>fm-cloud-gray-bunny-core</artifactId>
+                <version>${fm-cloud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fm</groupId>
+                <artifactId>fm-cloud-starter-graybunny-server</artifactId>
+                <version>${fm-cloud.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.mapstruct</groupId>
+                        <artifactId>mapstruct</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-spring-web</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-bean-validators</artifactId>
+                <version>${springfox.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

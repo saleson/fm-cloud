@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>fm-cloud-starter-bamboo</module>
+        <module>fm-cloud-starter-graybunny-server</module>
     </modules>
 
 

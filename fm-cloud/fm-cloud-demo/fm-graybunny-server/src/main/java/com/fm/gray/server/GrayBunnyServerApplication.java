@@ -1,15 +1,12 @@
-package com.fm.client;
+package com.fm.gray.server;
 
-import com.fm.gray.client.EnableGrayBunny;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
-import org.springframework.web.client.RestTemplate;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -20,13 +17,12 @@ import java.net.UnknownHostException;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@EnableGrayBunny
-public class EurekaClient2Application {
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(EurekaClient2Application.class);
+public class GrayBunnyServerApplication {
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(GrayBunnyServerApplication.class);
 
 
     public static void main(String[] args) throws UnknownHostException {
-        Environment env = new SpringApplicationBuilder(EurekaClient2Application.class).web(true).run(args).getEnvironment();
+        Environment env = new SpringApplicationBuilder(GrayBunnyServerApplication.class).web(true).run(args).getEnvironment();
         log.info(
                 "\n----------------------------------------------------------\n\t"
                         + "Application '{}' is running! Access URLs:\n\t" + "Local: \t\thttp://127.0.0.1:{}\n\t"

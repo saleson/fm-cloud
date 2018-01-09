@@ -26,10 +26,6 @@ public class BambooZoneAvoidanceRule extends ZoneAvoidanceRule {
 
     @Override
     public AbstractServerPredicate getPredicate() {
-        BambooRequestContext requestContext = BambooRequestContext.currentRequestCentxt();
-        if(requestContext==null || StringUtils.isEmpty(requestContext.getApiVersion())){
-            return super.getPredicate();
-        }
         return bambooCompositePredicate;
     }
 

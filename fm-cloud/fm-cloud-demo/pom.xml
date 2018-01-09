@@ -17,6 +17,7 @@
         <module>fm-zuul</module>
         <module>fm-zuul-server</module>
         <module>fm-eureka-client2</module>
+        <module>fm-graybunny-server</module>
     </modules>
 
     <build>

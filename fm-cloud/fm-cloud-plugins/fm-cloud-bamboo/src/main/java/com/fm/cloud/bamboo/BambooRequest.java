@@ -132,4 +132,9 @@ public class BambooRequest {
     public MultiValueMap<String, String> getHeaders() {
         return headers;
     }
+
+
+    public String getIp() {
+        return ip;
+    }
 }

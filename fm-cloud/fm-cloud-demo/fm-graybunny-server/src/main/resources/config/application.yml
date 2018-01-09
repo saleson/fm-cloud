@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: graybunny-server
+server:
+  port: 10202
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://localhost:10002/eureka/
