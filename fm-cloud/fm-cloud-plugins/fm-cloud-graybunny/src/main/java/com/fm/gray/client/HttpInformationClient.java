@@ -38,7 +38,7 @@ public class HttpInformationClient implements InformationClient {
             return responseEntity.getBody();
         } catch (Exception e) {
             log.error("获取灰度服务列表失败", e);
-            return Collections.EMPTY_LIST;
+            return null;
         }
     }
 
