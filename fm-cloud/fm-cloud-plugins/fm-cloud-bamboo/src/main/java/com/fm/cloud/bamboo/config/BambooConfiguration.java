@@ -17,6 +17,7 @@ import org.springframework.cloud.netflix.ribbon.SpringClientFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
@@ -88,6 +89,7 @@ public class BambooConfiguration {
     }
 
     @Bean
+    @Order(value = BambooConstants.INITIALIZING_ORDER)
     public BambooInitializingBean bambooInitializingBean(){
         return new BambooInitializingBean();
     }

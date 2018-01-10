@@ -22,4 +22,12 @@ public interface GrayServiceManager {
     GrayService getGrayService(String serviceId);
 
     GrayInstance getGrayInstane(String serviceId, String instanceId);
+
+    /**
+     * 打开检查
+     */
+    void openForInspection();
+
+
+    void shutdown();
 }

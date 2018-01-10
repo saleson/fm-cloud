@@ -1,6 +1,7 @@
 package com.fm.gray;
 
 import com.fm.gray.core.*;
+import com.fm.gray.server.GrayBunnyServerConfig;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,7 +13,13 @@ public class DefaultGrayServiceManager implements GrayServiceManager {
 
     private Map<String, GrayService> grayServiceMap = new ConcurrentHashMap<>();
     private Lock lock = new ReentrantLock();
+    private GrayBunnyServerConfig serverConfig;
+    private Timer evictionTimer = new Timer("GrayBunny-EvictionTimer", true);
 
+
+    public DefaultGrayServiceManager(GrayBunnyServerConfig config) {
+        this.serverConfig = config;
+    }
 
     @Override
     public void addGrayInstance(GrayInstance instance) {
@@ -102,4 +109,32 @@ public class DefaultGrayServiceManager implements GrayServiceManager {
         }
         return null;
     }
+
+    @Override
+    public void openForInspection() {
+        evictionTimer.schedule(new EvictionTask(),
+                serverConfig.getEvictionIntervalTimerInMs(),
+                serverConfig.getEvictionIntervalTimerInMs());
+    }
+
+    @Override
+    public void shutdown() {
+        evictionTimer.cancel();
+    }
+
+
+    protected void evict(){
+        GrayBunnyServerContext.getGrayBunnyServerEvictor().evict(this);
+    }
+
+
+
+    class EvictionTask extends TimerTask {
+
+        @Override
+        public void run() {
+            evict();
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.fm.gray.client.config;
 
+import com.fm.cloud.bamboo.BambooConstants;
 import com.fm.cloud.bamboo.config.BambooConfiguration;
 import com.fm.gray.GrayBunnyInitializingBean;
 import com.fm.gray.client.*;
@@ -19,6 +20,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
@@ -40,6 +42,7 @@ public class GrayBunnyConfiguration {
     }
 
     @Bean
+    @Order(value = BambooConstants.INITIALIZING_ORDER + 1)
     public GrayBunnyInitializingBean grayBunnyInitializingBean(){
         return new GrayBunnyInitializingBean();
     }

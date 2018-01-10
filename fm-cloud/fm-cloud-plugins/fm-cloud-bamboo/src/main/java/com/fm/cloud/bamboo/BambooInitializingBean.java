@@ -11,6 +11,10 @@ import org.springframework.context.ApplicationContextAware;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+
+/**
+ * Bamboo相关依赖的初始化工作
+ */
 public class BambooInitializingBean implements InitializingBean, ApplicationContextAware {
 
     private static final Logger log = LoggerFactory.getLogger(BambooInitializingBean.class);
@@ -30,15 +34,15 @@ public class BambooInitializingBean implements InitializingBean, ApplicationCont
         this.ctx = applicationContext;
     }
 
+
+    /**
+     * 设置本机ip
+     */
     private void setLocalIp(){
-        String ip = null;
-        InetAddress inet = null;
         try {
-            inet = InetAddress.getLocalHost();
-            ip = inet.getHostAddress();
+            BambooAppContext.setLocalIp(InetAddress.getLocalHost().getHostAddress());
         } catch (UnknownHostException e) {
             log.error("[IpHelper-getIpAddr] IpHelper error.", e);
         }
-        BambooAppContext.setLocalIp(ip);
     }
 }
