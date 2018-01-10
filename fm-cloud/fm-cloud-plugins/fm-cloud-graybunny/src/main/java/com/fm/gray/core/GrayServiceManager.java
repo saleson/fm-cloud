@@ -26,7 +26,7 @@ public interface GrayServiceManager {
     /**
      * 打开检查
      */
-    void openForInspection();
+    void openForWork();
 
 
     void shutdown();

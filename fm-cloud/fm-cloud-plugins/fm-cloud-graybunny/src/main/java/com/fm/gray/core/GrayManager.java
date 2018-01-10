@@ -1,8 +1,11 @@
 package com.fm.gray.core;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface GrayManager {
+
+    void openForWork();
 
     boolean isOpen(String serviceId);
 
@@ -15,6 +18,8 @@ public interface GrayManager {
     List<GrayDecision> grayDecision(GrayInstance instance);
 
     List<GrayDecision> grayDecision(String serviceId, String instanceId);
+
+    void updateGrayServices(Collection<GrayService> grayServices);
 
     void serviceDownline();
 }

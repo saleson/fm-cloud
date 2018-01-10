@@ -1,10 +1,13 @@
 package com.fm.gray.client.config.properties;
 
+import com.fm.gray.client.GrayClientConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("graybunny")
-public class GrayBunnyProperties {
+public class GrayBunnyProperties implements GrayClientConfig{
 
+
+    private int serviceUpdateIntervalTimerInMs = 60;
 
 
     private String informationClient = "http";
@@ -22,6 +25,11 @@ public class GrayBunnyProperties {
 
     public String getServerUrl() {
         return serverUrl;
+    }
+
+    @Override
+    public int getServiceUpdateIntervalTimerInMs() {
+        return serviceUpdateIntervalTimerInMs;
     }
 
     public void setServerUrl(String serverUrl) {

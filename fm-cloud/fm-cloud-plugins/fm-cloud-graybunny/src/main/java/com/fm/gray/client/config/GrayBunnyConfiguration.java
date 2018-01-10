@@ -80,7 +80,11 @@ public class GrayBunnyConfiguration {
 
         @Bean
         public GrayManager grayManager(InformationClient informationClient, GrayDecisionFactory grayDecisionFactory) {
-            return new DefaultGrayManager(informationClient, grayDecisionFactory);
+            GrayOptionalArgs args = new GrayOptionalArgs();
+            args.setDecisionFactory(grayDecisionFactory);
+            args.setGrayClientConfig(grayBunnyProperties);
+            args.setInformationClient(informationClient);
+            return new DefaultGrayManager(args);
         }
     }
 

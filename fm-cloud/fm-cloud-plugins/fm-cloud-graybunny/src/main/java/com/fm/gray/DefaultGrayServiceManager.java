@@ -53,7 +53,6 @@ public class DefaultGrayServiceManager implements GrayServiceManager {
         } finally {
             lock.unlock();
         }
-
     }
 
     @Override
@@ -111,7 +110,7 @@ public class DefaultGrayServiceManager implements GrayServiceManager {
     }
 
     @Override
-    public void openForInspection() {
+    public void openForWork() {
         evictionTimer.schedule(new EvictionTask(),
                 serverConfig.getEvictionIntervalTimerInMs(),
                 serverConfig.getEvictionIntervalTimerInMs());

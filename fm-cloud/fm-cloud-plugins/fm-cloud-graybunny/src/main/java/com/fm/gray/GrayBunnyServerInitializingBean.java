@@ -26,7 +26,7 @@ public class GrayBunnyServerInitializingBean implements InitializingBean, Applic
     }
 
     private void initToWork(){
-        GrayBunnyServerContext.getGrayServiceManager().openForInspection();
+        GrayBunnyServerContext.getGrayServiceManager().openForWork();
     }
 
 
