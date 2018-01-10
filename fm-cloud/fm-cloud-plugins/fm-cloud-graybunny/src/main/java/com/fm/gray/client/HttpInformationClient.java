@@ -1,5 +1,6 @@
 package com.fm.gray.client;
 
+import com.fm.gray.GrayBunnyAppContext;
 import com.fm.gray.core.GrayInstance;
 import com.fm.gray.core.GrayService;
 import com.fm.gray.core.InformationClient;
@@ -13,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 public class HttpInformationClient implements InformationClient{
-
     private final String baseUrl;
     private RestTemplate rest;
 
@@ -53,5 +53,21 @@ public class HttpInformationClient implements InformationClient{
 
         ResponseEntity<GrayInstance> responseEntity = rest.getForEntity(url, GrayInstance.class, params);
         return responseEntity.getBody();
+    }
+
+    @Override
+    public void serviceDownline() {
+        InstanceLocalInfo localInfo = GrayBunnyAppContext.getInstanceLocalInfo();
+        if(!localInfo.isGray()){
+            return;
+        }
+
+        String url = this.baseUrl +"/gray/services/{serviceId}/instance/?instanceId={instanceId}";
+        System.out.println(localInfo.getServiceId());
+        System.out.println(localInfo.getInstanceId());
+        Map<String, String> params = new HashMap<>();
+        params.put("serviceId", localInfo.getServiceId());
+        params.put("instanceId", localInfo.getInstanceId());
+        rest.delete(url, params);
     }
 }

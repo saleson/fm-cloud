@@ -9,4 +9,7 @@ public interface InformationClient {
     GrayService grayService(String serviceId);
 
     GrayInstance grayInstance(String serviceId, String instanceId);
+
+    void serviceDownline();
+
 }

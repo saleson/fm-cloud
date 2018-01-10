@@ -1,12 +1,15 @@
 package com.fm.gray.client;
 
+import com.fm.gray.GrayBunnyAppContext;
 import com.fm.gray.core.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class DefaultGrayManager implements GrayManager {
+    private static final Logger log = LoggerFactory.getLogger(DefaultGrayManager.class);
 
     protected GrayDecisionFactory decisionFactory;
     protected InformationClient client;
@@ -59,6 +62,16 @@ public class DefaultGrayManager implements GrayManager {
             }
         }
         return decisions;
+    }
+
+    @Override
+    public void serviceDownline() {
+        InstanceLocalInfo localInfo = GrayBunnyAppContext.getInstanceLocalInfo();
+        if(localInfo.isGray()){
+            log.debug("灰度服务下线...");
+            client.serviceDownline();
+            log.debug("灰度服务下线完成");
+        }
     }
 
 

@@ -15,4 +15,6 @@ public interface GrayManager {
     List<GrayDecision> grayDecision(GrayInstance instance);
 
     List<GrayDecision> grayDecision(String serviceId, String instanceId);
+
+    void serviceDownline();
 }
