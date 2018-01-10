@@ -17,6 +17,8 @@ public class GrayBunnyInitializingBean implements InitializingBean, ApplicationC
         GrayBunnyAppContext.setGrayManager(cxt.getBean(GrayManager.class));
         GrayBunnyAppContext.setInstanceLocalInfo(cxt.getBean(InstanceLocalInfo.class));
 
+        startForWork();
+
 //        registrShutdownFunc();
     }
 
@@ -34,5 +36,9 @@ public class GrayBunnyInitializingBean implements InitializingBean, ApplicationC
     @PreDestroy
     public void shutdown(){
         GrayBunnyAppContext.getGrayManager().serviceDownline();
+    }
+
+    private void startForWork(){
+        GrayBunnyAppContext.getGrayManager().openForWork();
     }
 }

@@ -1,5 +1,6 @@
 package com.fm.zuul;
 
+import com.fm.gray.client.EnableGrayBunny;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -19,7 +20,7 @@ import java.net.UnknownHostException;
 @EnableCircuitBreaker
 @EnableEurekaServer
 @EnableZuulProxy
-//@ImportAutoConfiguration({BambooConfiguration.class, BambooFeighConfiguration.class})
+@EnableGrayBunny
 public class EurekaZuulApplication {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(EurekaZuulApplication.class);
 

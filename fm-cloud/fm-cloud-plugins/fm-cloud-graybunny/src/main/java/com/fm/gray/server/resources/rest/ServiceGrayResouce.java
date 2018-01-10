@@ -51,7 +51,7 @@ public class ServiceGrayResouce {
             Application app = eurekaClient.getApplication(serviceId);
             vo.setAppName(app.getName());
             vo.setInstanceSize(app.getInstances().size());
-            GrayService grayService = grayServiceManager.getGrayService(app.getName());
+            GrayService grayService = grayServiceManager.getGrayService(serviceId);
             vo.setHasGrayInstances(grayService != null && grayService.isOpenGray());
             services.add(vo);
         }

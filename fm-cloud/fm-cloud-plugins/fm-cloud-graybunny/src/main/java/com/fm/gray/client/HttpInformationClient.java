@@ -4,16 +4,20 @@ import com.fm.gray.GrayBunnyAppContext;
 import com.fm.gray.core.GrayInstance;
 import com.fm.gray.core.GrayService;
 import com.fm.gray.core.InformationClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HttpInformationClient implements InformationClient{
+public class HttpInformationClient implements InformationClient {
+    private static final Logger log = LoggerFactory.getLogger(HttpInformationClient.class);
     private final String baseUrl;
     private RestTemplate rest;
 
@@ -24,50 +28,68 @@ public class HttpInformationClient implements InformationClient{
 
     @Override
     public List<GrayService> listGrayService() {
-        String url = this.baseUrl +"/gray/services";
+        String url = this.baseUrl + "/gray/services";
 
         ParameterizedTypeReference<List<GrayService>> typeRef = new ParameterizedTypeReference<List<GrayService>>() {
         };
 
-        ResponseEntity<List<GrayService>> responseEntity = rest.exchange(url, HttpMethod.GET, null, typeRef);
-        return  responseEntity.getBody();
+        try {
+            ResponseEntity<List<GrayService>> responseEntity = rest.exchange(url, HttpMethod.GET, null, typeRef);
+            return responseEntity.getBody();
+        } catch (Exception e) {
+            log.error("获取灰度服务列表失败", e);
+            return Collections.EMPTY_LIST;
+        }
     }
 
     @Override
     public GrayService grayService(String serviceId) {
-        String url = this.baseUrl +"/gray/services/{serviceId}";
+        String url = this.baseUrl + "/gray/services/{serviceId}";
         Map<String, String> params = new HashMap<>();
         params.put("serviceId", serviceId);
 
-        ResponseEntity<GrayService> responseEntity = rest.getForEntity(url, GrayService.class, params);
-        return responseEntity.getBody();
+        try {
+            ResponseEntity<GrayService> responseEntity = rest.getForEntity(url, GrayService.class, params);
+            return responseEntity.getBody();
+        } catch (Exception e) {
+            log.error("获取灰度服务失败", e);
+            return null;
+        }
     }
 
     @Override
     public GrayInstance grayInstance(String serviceId, String instanceId) {
-        String url = this.baseUrl +"/gray/services/{serviceId}/instance/?instanceId={instanceId}";
+        String url = this.baseUrl + "/gray/services/{serviceId}/instance/?instanceId={instanceId}";
 
         Map<String, String> params = new HashMap<>();
         params.put("serviceId", serviceId);
         params.put("instanceId", instanceId);
-
-        ResponseEntity<GrayInstance> responseEntity = rest.getForEntity(url, GrayInstance.class, params);
-        return responseEntity.getBody();
+        try {
+            ResponseEntity<GrayInstance> responseEntity = rest.getForEntity(url, GrayInstance.class, params);
+            return responseEntity.getBody();
+        } catch (Exception e) {
+            log.error("获取灰度服务实例失败", e);
+            return null;
+        }
     }
 
     @Override
     public void serviceDownline() {
         InstanceLocalInfo localInfo = GrayBunnyAppContext.getInstanceLocalInfo();
-        if(!localInfo.isGray()){
+        if (!localInfo.isGray()) {
             return;
         }
 
-        String url = this.baseUrl +"/gray/services/{serviceId}/instance/?instanceId={instanceId}";
+        String url = this.baseUrl + "/gray/services/{serviceId}/instance/?instanceId={instanceId}";
         System.out.println(localInfo.getServiceId());
         System.out.println(localInfo.getInstanceId());
         Map<String, String> params = new HashMap<>();
         params.put("serviceId", localInfo.getServiceId());
-        params.put("instanceId", localInfo.getInstanceId());
-        rest.delete(url, params);
+        try {
+            params.put("instanceId", localInfo.getInstanceId());
+            rest.delete(url, params);
+        } catch (Exception e) {
+            log.error("灰度服务实例下线失败", e);
+        }
     }
 }

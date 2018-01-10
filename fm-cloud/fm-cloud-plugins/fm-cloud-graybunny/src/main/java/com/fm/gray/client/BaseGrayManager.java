@@ -1,5 +1,6 @@
 package com.fm.gray.client;
 
+import com.fm.gray.core.GrayInstance;
 import com.fm.gray.core.GrayService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class BaseGrayManager extends AbstractGrayManager {
     private static final Logger log = LoggerFactory.getLogger(BaseGrayManager.class);
-    private Map<String, GrayService> grayServiceMap = new ConcurrentHashMap<>();
+    private Map<String, GrayService> grayServiceMap;
     private Timer updateTimer = new Timer("GrayBunny-UpdateTimer", true);
     private GrayClientConfig clientConfig;
 
@@ -21,6 +22,7 @@ public class BaseGrayManager extends AbstractGrayManager {
 
     @Override
     public void openForWork() {
+        listGrayService();
         updateTimer.schedule(new UpdateTask(),
                 clientConfig.getServiceUpdateIntervalTimerInMs(),
                 clientConfig.getServiceUpdateIntervalTimerInMs());
@@ -32,6 +34,27 @@ public class BaseGrayManager extends AbstractGrayManager {
             updateGrayServices(super.listGrayService());
         }
         return new ArrayList<>(grayServiceMap.values());
+    }
+
+
+    @Override
+    public GrayService grayService(String serviceId) {
+        if (grayServiceMap == null) {
+            return super.grayService(serviceId);
+        }
+        return grayServiceMap.get(serviceId);
+    }
+
+    @Override
+    public GrayInstance grayInstance(String serviceId, String instanceId) {
+        if (grayServiceMap == null) {
+            return super.grayInstance(serviceId, instanceId);
+        }
+        GrayService grayService = grayService(serviceId);
+        if (grayService != null) {
+            return grayService.getGrayInstance(instanceId);
+        }
+        return null;
     }
 
     @Override

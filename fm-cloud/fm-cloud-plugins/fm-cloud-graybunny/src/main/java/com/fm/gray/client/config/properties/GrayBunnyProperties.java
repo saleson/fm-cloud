@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class GrayBunnyProperties implements GrayClientConfig{
 
 
-    private int serviceUpdateIntervalTimerInMs = 60;
+    private int serviceUpdateIntervalTimerInMs = 60000;
 
 
     private String informationClient = "http";
