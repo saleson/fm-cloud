@@ -31,7 +31,12 @@ public class BaseGrayManager extends AbstractGrayManager {
     @Override
     public List<GrayService> listGrayService() {
         if (grayServiceMap == null) {
-            updateGrayServices(super.listGrayService());
+            List<GrayService> grayServices = super.listGrayService();
+            if (grayServices == null) {
+                return null;
+
+            }
+            updateGrayServices(grayServices);
         }
         return new ArrayList<>(grayServiceMap.values());
     }
@@ -64,7 +69,7 @@ public class BaseGrayManager extends AbstractGrayManager {
 
     @Override
     public void updateGrayServices(Collection<GrayService> grayServices) {
-        if(grayServices==null){
+        if (grayServices == null) {
             return;
         }
         Map<String, GrayService> grayMap = new HashMap<>();
