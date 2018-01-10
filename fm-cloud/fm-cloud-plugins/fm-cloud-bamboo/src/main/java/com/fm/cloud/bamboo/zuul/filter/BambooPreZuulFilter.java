@@ -35,6 +35,7 @@ public class BambooPreZuulFilter extends ZuulFilter{
         BambooRequest.Builder builder = BambooRequest.builder()
                 .serviceId((String)context.get(FilterConstants.SERVICE_ID_KEY))
                 .uri((String)context.get(FilterConstants.REQUEST_URI_KEY))
+                .ip(context.getZuulRequestHeaders().get(FilterConstants.X_FORWARDED_FOR_HEADER.toLowerCase()))
                 .addMultiParams(context.getRequestQueryParams())
                 .addHeaders(context.getZuulRequestHeaders())
                 .addHeaders(context.getOriginResponseHeaders().stream().collect(Collectors.toMap(Pair::first, Pair::second)));
@@ -45,4 +46,5 @@ public class BambooPreZuulFilter extends ZuulFilter{
         BambooAppContext.getBambooRibbonConnectionPoint().executeConnectPoint(connectPointContext);
         return null;
     }
+
 }

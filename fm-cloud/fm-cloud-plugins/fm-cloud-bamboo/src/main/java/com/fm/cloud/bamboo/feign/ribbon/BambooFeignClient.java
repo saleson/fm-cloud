@@ -4,6 +4,7 @@ import com.fm.cloud.bamboo.BambooAppContext;
 import com.fm.cloud.bamboo.BambooRequest;
 import com.fm.cloud.bamboo.BambooRequestContext;
 import com.fm.cloud.bamboo.ConnectPointContext;
+import com.fm.cloud.bamboo.web.RequestIpKeeper;
 import com.fm.utils.WebUtils;
 import feign.Client;
 import feign.Request;
@@ -31,6 +32,7 @@ public class BambooFeignClient implements Client {
         BambooRequest.Builder builder = BambooRequest.builder()
                 .serviceId(uri.getHost())
                 .uri(uri.getPath())
+                .ip(RequestIpKeeper.getRequestIp())
                 .addMultiParams(WebUtils.getQueryParams(uri.getQuery()));
 
         request.headers().entrySet().forEach(entry ->{

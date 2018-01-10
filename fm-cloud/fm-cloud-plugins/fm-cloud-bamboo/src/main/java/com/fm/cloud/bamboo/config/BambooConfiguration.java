@@ -16,6 +16,7 @@ import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.ribbon.SpringClientFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
@@ -27,6 +28,7 @@ import java.util.List;
 @Configuration
 @EnableConfigurationProperties
 @AutoConfigureBefore({BambooFeighConfiguration.class, BambooZuulConfiguration.class})
+@Import(BambooWebConfiguration.class)
 //@RibbonClients(defaultConfiguration = {BambooExtConfigration.class})
 public class BambooConfiguration {
 

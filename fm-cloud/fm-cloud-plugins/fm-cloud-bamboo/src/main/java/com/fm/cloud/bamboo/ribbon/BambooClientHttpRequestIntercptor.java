@@ -4,6 +4,7 @@ import com.fm.cloud.bamboo.BambooAppContext;
 import com.fm.cloud.bamboo.BambooRequest;
 import com.fm.cloud.bamboo.BambooRequestContext;
 import com.fm.cloud.bamboo.ConnectPointContext;
+import com.fm.cloud.bamboo.web.RequestIpKeeper;
 import com.fm.utils.WebUtils;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
@@ -25,6 +26,7 @@ public class BambooClientHttpRequestIntercptor implements ClientHttpRequestInter
         BambooRequest bambooRequest = BambooRequest.builder()
                 .serviceId(uri.getHost())
                 .uri(uri.getPath())
+                .ip(RequestIpKeeper.getRequestIp())
                 .addMultiHeaders(request.getHeaders())
                 .addMultiParams(WebUtils.getQueryParams(uri.getQuery()))
                 .build();
