@@ -83,6 +83,7 @@ public class HttpInformationClient implements InformationClient {
             rest.postForEntity(url, grayInstance, null, serviceId);
         } catch (Exception e) {
             log.error("灰度服务实例下线失败", e);
+            throw e;
         }
     }
 

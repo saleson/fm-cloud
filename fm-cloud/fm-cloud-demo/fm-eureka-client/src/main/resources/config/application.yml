@@ -19,4 +19,4 @@ eureka:
 graybunny:
   instance:
     grayEnroll: true
-  serverUrl: http://192.168.6.22:10202
+#  serverUrl: http://192.168.6.22:10202

@@ -31,6 +31,7 @@ public class BaseGrayManager extends AbstractGrayManager {
         if(clientConfig.isGrayEnroll()){
             grayEnroll();
         }
+        log.info("拉取灰度列表");
         doUpdate();
         updateTimer.schedule(new UpdateTask(),
                 clientConfig.getServiceUpdateIntervalTimerInMs(),
@@ -100,7 +101,7 @@ public class BaseGrayManager extends AbstractGrayManager {
 
     private void grayEnroll(){
         Thread t = new Thread(()->{
-            log.debug("灰度注册自身实例...");
+            log.info("灰度注册自身实例...");
             InstanceLocalInfo localInfo = GrayBunnyAppContext.getInstanceLocalInfo();
             try {
                 client.addGrayInstance(localInfo.getServiceId(), localInfo.getInstanceId());

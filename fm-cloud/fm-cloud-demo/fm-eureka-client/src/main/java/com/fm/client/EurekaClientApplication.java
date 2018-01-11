@@ -1,6 +1,5 @@
 package com.fm.client;
 
-//import com.fm.gray.client.EnableGrayBunny;
 import com.fm.gray.client.EnableGrayBunny;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,6 +9,7 @@ import org.springframework.core.env.Environment;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+
 
 /**
  * Created by saleson on 2017/10/18.
