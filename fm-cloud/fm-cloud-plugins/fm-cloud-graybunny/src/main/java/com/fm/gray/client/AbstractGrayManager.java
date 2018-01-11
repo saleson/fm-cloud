@@ -25,7 +25,7 @@ public abstract class AbstractGrayManager implements GrayManager {
     @Override
     public boolean isOpen(String serviceId) {
         GrayService grayService = grayService(serviceId);
-        return grayService!=null
+        return grayService != null
                 && grayService.isOpenGray();
     }
 
@@ -52,14 +52,19 @@ public abstract class AbstractGrayManager implements GrayManager {
     @Override
     public List<GrayDecision> grayDecision(String serviceId, String instanceId) {
         GrayInstance grayInstance = grayInstance(serviceId, instanceId);
-        if(grayInstance==null || grayInstance.getGrayPolicyGroups()==null || grayInstance.getGrayPolicyGroups().isEmpty()){
+        if (grayInstance == null || !grayInstance.isOpenGray()
+                || grayInstance.getGrayPolicyGroups() == null
+                || grayInstance.getGrayPolicyGroups().isEmpty()) {
             return Collections.emptyList();
         }
         List<GrayPolicyGroup> policyGroups = grayInstance.getGrayPolicyGroups();
         List<GrayDecision> decisions = new ArrayList<>(policyGroups.size());
-        for (GrayPolicyGroup policyGroup : policyGroups){
+        for (GrayPolicyGroup policyGroup : policyGroups) {
+            if(!policyGroup.isEnable()){
+                continue;
+            }
             GrayDecision grayDecision = toGrayDecision(policyGroup);
-            if(grayDecision!=GrayDecision.refuse()){
+            if (grayDecision != GrayDecision.refuse()) {
                 decisions.add(grayDecision);
             }
         }
@@ -69,7 +74,7 @@ public abstract class AbstractGrayManager implements GrayManager {
     @Override
     public void serviceDownline() {
         InstanceLocalInfo localInfo = GrayBunnyAppContext.getInstanceLocalInfo();
-        if(localInfo.isGray()){
+        if (localInfo.isGray()) {
             log.debug("灰度服务下线...");
             client.serviceDownline();
             log.debug("灰度服务下线完成");
@@ -81,9 +86,9 @@ public abstract class AbstractGrayManager implements GrayManager {
     protected abstract void serviceShutdown();
 
 
-    private GrayDecision toGrayDecision(GrayPolicyGroup policyGroup){
+    private GrayDecision toGrayDecision(GrayPolicyGroup policyGroup) {
         List<GrayPolicy> policies = policyGroup.getList();
-        if(policies==null || policies.isEmpty()){
+        if (policies == null || policies.isEmpty()) {
             return GrayDecision.refuse();
         }
         MultiGrayDecision decision = new MultiGrayDecision(GrayDecision.allow());

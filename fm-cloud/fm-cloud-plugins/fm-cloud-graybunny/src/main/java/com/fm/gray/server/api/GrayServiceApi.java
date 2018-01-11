@@ -16,6 +16,9 @@ public interface GrayServiceApi {
     @RequestMapping(value = "/services", method = RequestMethod.GET)
     List<GrayService> services();
 
+    @RequestMapping(value = "/services/enable", method = RequestMethod.GET)
+    List<GrayService> enableServices();
+
 
     @RequestMapping(value = "/services/{serviceId}", method = RequestMethod.GET)
     GrayService service(@PathVariable("serviceId") String serviceId);

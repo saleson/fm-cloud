@@ -10,6 +10,7 @@ public class GrayInstanceVO {
     private String url;
     private Map<String, String> metadata;
     private boolean hasGrayPolicies;
+    private boolean openGray;
 
 
     public String getServiceId() {
@@ -58,5 +59,13 @@ public class GrayInstanceVO {
 
     public void setHasGrayPolicies(boolean hasGrayPolicies) {
         this.hasGrayPolicies = hasGrayPolicies;
+    }
+
+    public boolean isOpenGray() {
+        return openGray;
+    }
+
+    public void setOpenGray(boolean openGray) {
+        this.openGray = openGray;
     }
 }

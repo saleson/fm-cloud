@@ -12,6 +12,7 @@ import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.serviceregistry.Registration;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +53,10 @@ public class ServiceGrayResouce {
             vo.setAppName(app.getName());
             vo.setInstanceSize(app.getInstances().size());
             GrayService grayService = grayServiceManager.getGrayService(serviceId);
-            vo.setHasGrayInstances(grayService != null && grayService.isOpenGray());
+            if (grayService != null) {
+                vo.setHasGrayInstances(grayService.isOpenGray());
+                vo.setHasGrayPolicies(grayService.hasGrayPolicy());
+            }
             services.add(vo);
         }
         return ResponseEntity.ok(services);
@@ -78,10 +82,25 @@ public class ServiceGrayResouce {
             vo.setMetadata(instanceInfo.getMetadata());
             vo.setUrl(instanceInfo.getHomePageUrl());
             GrayInstance grayInstance = grayServiceManager.getGrayInstane(serviceId, instanceInfo.getInstanceId());
-            vo.setHasGrayPolicies(grayInstance != null && grayInstance.hasGrayPolicy());
+            if (grayInstance != null) {
+                vo.setOpenGray(grayInstance.isOpenGray());
+                vo.setHasGrayPolicies(grayInstance.hasGrayPolicy());
+            }
             list.add(vo);
         }
         return ResponseEntity.ok(list);
+    }
+
+
+    @ApiOperation(value = "更新实例灰度状态")
+    @RequestMapping(value = "/services/{serviceId}/instance/status/{status}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> editInstanceStatus(
+            @PathVariable("serviceId") String serviceId,
+            @RequestParam("instanceId") String instanceId,
+            @ApiParam("0:关闭, 1:启用") @PathVariable("status") int status) {
+
+        return grayServiceManager.updateInstanceStatus(serviceId, instanceId, status)
+                ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
     }
 
 
@@ -132,8 +151,20 @@ public class ServiceGrayResouce {
                 return ResponseEntity.ok(getPolicyGroup(serviceId, instanceInfo, policyGroup));
             }
         }
-
         return ResponseEntity.ok().build();
+    }
+
+
+    @ApiOperation(value = "更新实例策略组启用状态")
+    @RequestMapping(value = "/services/{serviceId}/instance/policyGroup/{groupId}/status/{status}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> editPolicyGroupStatus(@PathVariable("serviceId") String serviceId,
+                                                      @RequestParam("instanceId") String instanceId,
+                                                      @PathVariable("groupId") String groupId,
+                                                      @ApiParam("0:关闭, 1:启用") @PathVariable("status") int enable) {
+
+        return grayServiceManager.updatePolicyGroupStatus(serviceId, instanceId, groupId, enable)
+                ? ResponseEntity.ok().build() :
+                ResponseEntity.badRequest().build();
     }
 
 
@@ -145,8 +176,9 @@ public class ServiceGrayResouce {
      * @return
      */
     @RequestMapping(value = "/services/{serviceId}/instance/policyGroup", method = RequestMethod.POST)
-    public ResponseEntity<Void> policyGroup(@PathVariable("serviceId") String serviceId,
-                                            @RequestBody GrayPolicyGroupFO policyGroupFO) {
+    public ResponseEntity<Void> policyGroup(
+            @PathVariable("serviceId") String serviceId,
+            @RequestBody GrayPolicyGroupFO policyGroupFO) {
         GrayInstance grayInstance = grayServiceManager.getGrayInstane(serviceId, policyGroupFO.getInstanceId());
         if (grayInstance == null) {
             grayInstance = new GrayInstance();
@@ -172,12 +204,13 @@ public class ServiceGrayResouce {
      */
     @ApiOperation("删除策略组")
     @RequestMapping(value = "/services/{serviceId}/instance/policyGroup", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> delPolicyGroup(@PathVariable("serviceId") String serviceId,
-                                               @RequestParam("instanceId") String instanceId,
-                                               @RequestParam("groupId") String policyGroupId) {
+    public ResponseEntity<Void> delPolicyGroup(
+            @PathVariable("serviceId") String serviceId,
+            @RequestParam("instanceId") String instanceId,
+            @RequestParam("groupId") String policyGroupId) {
         GrayInstance grayInstance = grayServiceManager.getGrayInstane(serviceId, instanceId);
         if (grayInstance != null) {
-            if(grayInstance.removeGrayPolicyGroup(policyGroupId)!=null && grayInstance.getGrayPolicyGroups().isEmpty()){
+            if (grayInstance.removeGrayPolicyGroup(policyGroupId) != null && grayInstance.getGrayPolicyGroups().isEmpty()) {
                 grayServiceManager.deleteGrayInstance(serviceId, instanceId);
             }
         }
@@ -186,7 +219,8 @@ public class ServiceGrayResouce {
     }
 
 
-    private GrayPolicyGroupVO getPolicyGroup(String serviceId, InstanceInfo instanceInfo, GrayPolicyGroup policyGroup) {
+    private GrayPolicyGroupVO getPolicyGroup(
+            String serviceId, InstanceInfo instanceInfo, GrayPolicyGroup policyGroup) {
         GrayPolicyGroupVO vo = new GrayPolicyGroupVO();
         vo.setAppName(instanceInfo.getAppName());
         vo.setInstanceId(instanceInfo.getInstanceId());
@@ -195,6 +229,7 @@ public class ServiceGrayResouce {
         vo.setAlias(policyGroup.getAlias());
         vo.setPolicyGroupId(policyGroup.getPolicyGroupId());
         vo.setPolicies(policyGroup.getList());
+        vo.setEnable(policyGroup.isEnable());
         return vo;
     }
 

@@ -10,6 +10,7 @@ import java.util.Map;
 /**
  * Created by saleson on 2017/11/13.
  */
+@Deprecated
 public class ApiVersionHelper {
 
     public static String getApiVersion(URI uri) {

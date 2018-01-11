@@ -9,6 +9,7 @@ public class GrayPolicyGroup {
     private String policyGroupId;
     private String alias;
     private List<GrayPolicy> list = new ArrayList<>();
+    private boolean enable = true;
 
     public String getPolicyGroupId() {
         return policyGroupId;
@@ -60,5 +61,14 @@ public class GrayPolicyGroup {
             }
         }
         return null;
+    }
+
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 }

@@ -28,8 +28,7 @@ public class HttpInformationClient implements InformationClient {
 
     @Override
     public List<GrayService> listGrayService() {
-        String url = this.baseUrl + "/gray/services";
-
+        String url = this.baseUrl + "/gray/services/enable";
         ParameterizedTypeReference<List<GrayService>> typeRef = new ParameterizedTypeReference<List<GrayService>>() {
         };
 

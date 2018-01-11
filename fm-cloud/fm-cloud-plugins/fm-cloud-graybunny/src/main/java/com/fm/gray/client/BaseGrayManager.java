@@ -17,12 +17,13 @@ public class BaseGrayManager extends AbstractGrayManager {
     public BaseGrayManager(GrayOptionalArgs grayOptionalArgs) {
         super(grayOptionalArgs.getInformationClient(), grayOptionalArgs.getDecisionFactory());
         clientConfig = grayOptionalArgs.getGrayClientConfig();
+        grayServiceMap = new ConcurrentHashMap<>();
     }
 
 
     @Override
     public void openForWork() {
-        listGrayService();
+        doUpdate();
         updateTimer.schedule(new UpdateTask(),
                 clientConfig.getServiceUpdateIntervalTimerInMs(),
                 clientConfig.getServiceUpdateIntervalTimerInMs());
@@ -80,6 +81,7 @@ public class BaseGrayManager extends AbstractGrayManager {
 
     private void doUpdate() {
         try {
+            log.debug("更新灰度服务列表...");
             updateGrayServices(client.listGrayService());
         } catch (Exception e) {
             log.error("更新灰度服务列表失败", e);

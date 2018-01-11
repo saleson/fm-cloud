@@ -8,6 +8,7 @@ public class GrayInstance {
     private String serviceId;
     private String instanceId;
     private List<GrayPolicyGroup> grayPolicyGroups = new ArrayList<>();
+    private boolean openGray = true;
 
 
     public String getServiceId() {
@@ -80,6 +81,14 @@ public class GrayInstance {
     }
 
 
+    public boolean isOpenGray() {
+        return openGray;
+    }
+
+    public void setOpenGray(boolean openGray) {
+        this.openGray = openGray;
+    }
+
     public boolean hasGrayPolicy() {
         for (GrayPolicyGroup policyGroup : getGrayPolicyGroups()) {
             if (policyGroup.getList() != null || policyGroup.getList().size() > 0) {
@@ -87,5 +96,33 @@ public class GrayInstance {
             }
         }
         return false;
+    }
+
+
+    public int countGrayPolicy() {
+        int count = 0;
+        for (GrayPolicyGroup policyGroup : getGrayPolicyGroups()) {
+            count += policyGroup.getList().size();
+        }
+        return count;
+    }
+
+    public GrayInstance toNewGrayInstance(){
+        GrayInstance newInstance = new GrayInstance();
+        newInstance.setInstanceId(instanceId);
+        newInstance.setServiceId(serviceId);
+        newInstance.setOpenGray(openGray);
+        return newInstance;
+    }
+
+
+    public GrayInstance takeNewOpenGrayInstance(){
+        GrayInstance instance = toNewGrayInstance();
+        for (GrayPolicyGroup grayPolicyGroup : grayPolicyGroups) {
+            if(grayPolicyGroup.isEnable()){
+                instance.addGrayPolicyGroup(grayPolicyGroup);
+            }
+        }
+        return instance;
     }
 }

@@ -2,6 +2,7 @@ package com.fm.gray;
 
 import com.fm.gray.core.*;
 import com.fm.gray.server.GrayBunnyServerConfig;
+import org.springframework.http.ResponseEntity;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -57,32 +58,32 @@ public class DefaultGrayServiceManager implements GrayServiceManager {
 
     @Override
     public void addGrayPolicy(String serviceId, String instanceId, String policyGroupId, GrayPolicy policy) {
-        GrayInstance grayInstance= getGrayInstane(serviceId, instanceId);
-        if(grayInstance!=null){
+        GrayInstance grayInstance = getGrayInstane(serviceId, instanceId);
+        if (grayInstance != null) {
             grayInstance.addGrayPolicy(policyGroupId, policy);
         }
     }
 
     @Override
     public void deleteGrayPolicy(String serviceId, String instanceId, String policyGroupId, String policyId) {
-        GrayInstance grayInstance= getGrayInstane(serviceId, instanceId);
-        if(grayInstance!=null){
+        GrayInstance grayInstance = getGrayInstane(serviceId, instanceId);
+        if (grayInstance != null) {
             grayInstance.removeGrayPolicy(policyGroupId, policyId);
         }
     }
 
     @Override
     public void addGrayPolicyGroup(String serviceId, String instanceId, GrayPolicyGroup policyGroup) {
-        GrayInstance grayInstance= getGrayInstane(serviceId, instanceId);
-        if(grayInstance!=null){
+        GrayInstance grayInstance = getGrayInstane(serviceId, instanceId);
+        if (grayInstance != null) {
             grayInstance.addGrayPolicyGroup(policyGroup);
         }
     }
 
     @Override
     public void deleteGrayPolicyGroup(String serviceId, String instanceId, String policyGroupId) {
-        GrayInstance grayInstance= getGrayInstane(serviceId, instanceId);
-        if(grayInstance!=null){
+        GrayInstance grayInstance = getGrayInstane(serviceId, instanceId);
+        if (grayInstance != null) {
             grayInstance.removeGrayPolicyGroup(policyGroupId);
         }
     }
@@ -94,19 +95,44 @@ public class DefaultGrayServiceManager implements GrayServiceManager {
     }
 
     @Override
-    public GrayService getGrayService(String serviceId){
+    public GrayService getGrayService(String serviceId) {
         return grayServiceMap.get(serviceId);
     }
 
 
-
     @Override
-    public GrayInstance getGrayInstane(String serviceId, String instanceId){
+    public GrayInstance getGrayInstane(String serviceId, String instanceId) {
         GrayService grayService = getGrayService(serviceId);
-        if(grayService!=null){
+        if (grayService != null) {
             return grayService.getGrayInstance(instanceId);
         }
         return null;
+    }
+
+    @Override
+    public boolean updateInstanceStatus(String serviceId, String instanceId, int status) {
+        GrayInstance grayInstance = getGrayInstane(serviceId, instanceId);
+        if (grayInstance == null) {
+            grayInstance = new GrayInstance();
+            grayInstance.setServiceId(serviceId);
+            grayInstance.setInstanceId(instanceId);
+            addGrayInstance(grayInstance);
+        }
+        grayInstance.setOpenGray(status == 1);
+        return true;
+    }
+
+    @Override
+    public boolean updatePolicyGroupStatus(String serviceId, String instanceId, String groupId, int enable) {
+        GrayInstance grayInstance = getGrayInstane(serviceId, instanceId);
+        if (grayInstance != null) {
+            GrayPolicyGroup policyGroup = grayInstance.getGrayPolicyGroup(groupId);
+            if (policyGroup != null) {
+                policyGroup.setEnable(enable == 1);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -122,10 +148,9 @@ public class DefaultGrayServiceManager implements GrayServiceManager {
     }
 
 
-    protected void evict(){
+    protected void evict() {
         GrayBunnyServerContext.getGrayBunnyServerEvictor().evict(this);
     }
-
 
 
     class EvictionTask extends TimerTask {

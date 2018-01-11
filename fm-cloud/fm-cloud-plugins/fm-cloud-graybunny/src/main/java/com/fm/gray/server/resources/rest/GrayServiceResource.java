@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -19,6 +20,19 @@ public class GrayServiceResource implements GrayServiceApi {
     @Override
     public List<GrayService> services() {
         return new ArrayList<>(grayServiceManager.allGrayService());
+    }
+
+    @Override
+    public List<GrayService> enableServices() {
+        Collection<GrayService> grayServices = grayServiceManager.allGrayService();
+        List<GrayService> serviceList = new ArrayList<>(grayServices.size());
+        for (GrayService grayService : grayServices) {
+            if (grayService.isOpenGray()) {
+                serviceList.add(grayService.takeNewOpenGrayService());
+            }
+        }
+
+        return serviceList;
     }
 
     @Override

@@ -12,6 +12,8 @@ public class GrayPolicyGroupVO {
     private String policyGroupId;
     private String alias;
     private List<GrayPolicy> policies;
+    private boolean enable;
+
 
     public String getServiceId() {
         return serviceId;
@@ -67,5 +69,13 @@ public class GrayPolicyGroupVO {
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 }

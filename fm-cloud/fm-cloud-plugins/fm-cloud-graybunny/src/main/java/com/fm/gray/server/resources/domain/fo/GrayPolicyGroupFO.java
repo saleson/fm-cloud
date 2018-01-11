@@ -2,14 +2,19 @@ package com.fm.gray.server.resources.domain.fo;
 
 import com.fm.gray.core.GrayPolicy;
 import com.fm.gray.core.GrayPolicyGroup;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.List;
 
+@ApiModel
 public class GrayPolicyGroupFO {
     private String instanceId;
     private String policyGroupId;
     private String alias;
     private List<GrayPolicy> policies;
+    @ApiModelProperty("0:关闭, 1:启用")
+    private boolean enable;
 
     public String getAlias() {
         return alias;
@@ -43,11 +48,19 @@ public class GrayPolicyGroupFO {
         this.policies = policies;
     }
 
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
 
     public GrayPolicyGroup toGrayPolicyGroup(){
         GrayPolicyGroup policyGroup = new GrayPolicyGroup();
         policyGroup.setAlias(this.getAlias());
         policyGroup.setList(this.getPolicies());
+        policyGroup.setEnable(this.isEnable());
         policyGroup.setPolicyGroupId(this.getPolicyGroupId());
         return policyGroup;
     }
