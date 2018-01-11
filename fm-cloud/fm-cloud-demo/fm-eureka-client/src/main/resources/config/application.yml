@@ -12,5 +12,11 @@ eureka:
 #      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
       defaultZone: http://localhost:10002/eureka/
   instance:
+    instanceId: ${spring.application.name}:${server.port}
     metadata-map:
       versions: 1,2
+
+graybunny:
+  instance:
+    grayEnroll: true
+  serverUrl: http://192.168.6.22:10202

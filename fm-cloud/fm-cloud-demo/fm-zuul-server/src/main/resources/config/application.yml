@@ -28,3 +28,7 @@ hystrix:
       execution:
         isolation:
           strategy: THREAD
+
+logging:
+  level:
+    root: DEBUG

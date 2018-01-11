@@ -1,5 +1,7 @@
 package com.fm.client;
 
+//import com.fm.gray.client.EnableGrayBunny;
+import com.fm.gray.client.EnableGrayBunny;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -14,6 +16,7 @@ import java.net.UnknownHostException;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableGrayBunny
 public class EurekaClientApplication {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(EurekaClientApplication.class);
 

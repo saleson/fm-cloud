@@ -1,5 +1,6 @@
 package com.fm.gray.client;
 
+import com.fm.gray.GrayBunnyAppContext;
 import com.fm.gray.core.GrayInstance;
 import com.fm.gray.core.GrayService;
 import org.slf4j.Logger;
@@ -8,6 +9,10 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+
+/**
+ *
+ */
 public class BaseGrayManager extends AbstractGrayManager {
     private static final Logger log = LoggerFactory.getLogger(BaseGrayManager.class);
     private Map<String, GrayService> grayServiceMap;
@@ -23,6 +28,9 @@ public class BaseGrayManager extends AbstractGrayManager {
 
     @Override
     public void openForWork() {
+        if(clientConfig.isGrayEnroll()){
+            grayEnroll();
+        }
         doUpdate();
         updateTimer.schedule(new UpdateTask(),
                 clientConfig.getServiceUpdateIntervalTimerInMs(),
@@ -76,6 +84,7 @@ public class BaseGrayManager extends AbstractGrayManager {
         Map<String, GrayService> grayMap = new HashMap<>();
         grayServices.forEach(grayService -> grayMap.put(grayService.getServiceId(), grayService));
         grayServiceMap = new ConcurrentHashMap(grayMap);
+        checkLocalGray();
     }
 
 
@@ -89,6 +98,26 @@ public class BaseGrayManager extends AbstractGrayManager {
     }
 
 
+    private void grayEnroll(){
+        Thread t = new Thread(()->{
+            log.debug("灰度注册自身实例...");
+            InstanceLocalInfo localInfo = GrayBunnyAppContext.getInstanceLocalInfo();
+            try {
+                client.addGrayInstance(localInfo.getServiceId(), localInfo.getInstanceId());
+                localInfo.setGray(true);
+            }catch (Exception e){
+                log.error("自身实例灰度注册失败", e);
+            }
+        }, "GrayEnroll");
+        t.start();
+    }
+
+    private void checkLocalGray(){
+        InstanceLocalInfo localInfo = GrayBunnyAppContext.getInstanceLocalInfo();
+        GrayService grayService = grayServiceMap.get(localInfo.getServiceId());
+        localInfo.setGray(grayService!=null && grayService.getGrayInstance(localInfo.getInstanceId())!=null);
+    }
+
     class UpdateTask extends TimerTask {
 
         @Override
@@ -96,6 +125,8 @@ public class BaseGrayManager extends AbstractGrayManager {
             doUpdate();
         }
     }
+
+
 
 
 }

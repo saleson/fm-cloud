@@ -73,6 +73,20 @@ public class HttpInformationClient implements InformationClient {
     }
 
     @Override
+    public void addGrayInstance(String serviceId, String instanceId) {
+        GrayInstance grayInstance = new GrayInstance();
+        grayInstance.setInstanceId(instanceId);
+        grayInstance.setServiceId(serviceId);
+
+        String url = this.baseUrl + "/gray/services/{serviceId}/instance";
+        try {
+            rest.postForEntity(url, grayInstance, null, serviceId);
+        } catch (Exception e) {
+            log.error("灰度服务实例下线失败", e);
+        }
+    }
+
+    @Override
     public void serviceDownline() {
         InstanceLocalInfo localInfo = GrayBunnyAppContext.getInstanceLocalInfo();
         if (!localInfo.isGray()) {
@@ -80,8 +94,6 @@ public class HttpInformationClient implements InformationClient {
         }
 
         String url = this.baseUrl + "/gray/services/{serviceId}/instance/?instanceId={instanceId}";
-        System.out.println(localInfo.getServiceId());
-        System.out.println(localInfo.getInstanceId());
         Map<String, String> params = new HashMap<>();
         params.put("serviceId", localInfo.getServiceId());
         try {

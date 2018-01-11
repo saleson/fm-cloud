@@ -91,7 +91,7 @@ public class DefaultGrayServiceManager implements GrayServiceManager {
 
     @Override
     public Collection<GrayService> allGrayService() {
-        return Collections.unmodifiableCollection(grayServiceMap.values());
+        return new ArrayList<>(grayServiceMap.values());
     }
 
     @Override

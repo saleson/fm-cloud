@@ -5,6 +5,8 @@ import com.fm.gray.server.api.GrayServiceApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -57,7 +59,7 @@ public class GrayServiceResource implements GrayServiceApi {
     }
 
     @Override
-    public ResponseEntity<Void> instance(@PathVariable("serviceId") String serviceId, GrayInstance instance) {
+    public ResponseEntity<Void> instance(@PathVariable("serviceId") String serviceId, @RequestBody GrayInstance instance) {
         instance.setServiceId(serviceId);
         grayServiceManager.addGrayInstance(instance);
         return ResponseEntity.ok().build();

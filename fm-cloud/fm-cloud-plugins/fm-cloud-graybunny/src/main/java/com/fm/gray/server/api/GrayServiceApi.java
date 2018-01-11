@@ -37,7 +37,6 @@ public interface GrayServiceApi {
     ResponseEntity<Void> delInstance(@PathVariable("serviceId") String serviceId,
                                      @RequestParam("instanceId") String instanceId);
 
-
     @RequestMapping(value = "/services/{serviceId}/instance", method = RequestMethod.POST)
     ResponseEntity<Void> instance(@PathVariable("serviceId") String serviceId, @RequestBody GrayInstance instance);
 

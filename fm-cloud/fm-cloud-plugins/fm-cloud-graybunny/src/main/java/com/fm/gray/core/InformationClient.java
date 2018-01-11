@@ -10,6 +10,9 @@ public interface InformationClient {
 
     GrayInstance grayInstance(String serviceId, String instanceId);
 
+
+    void addGrayInstance(String serviceId, String instanceId);
+
     void serviceDownline();
 
 }
