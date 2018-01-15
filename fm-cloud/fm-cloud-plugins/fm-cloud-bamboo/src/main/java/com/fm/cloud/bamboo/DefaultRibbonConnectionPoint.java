@@ -26,6 +26,7 @@ public class DefaultRibbonConnectionPoint implements BambooRibbonConnectionPoint
 
     @Override
     public void executeConnectPoint(ConnectPointContext connectPointContext) {
+        ConnectPointContext.contextLocal.set(connectPointContext);
         BambooRequest bambooRequest = connectPointContext.getBambooRequest();
         String requestVersion = versionExtractor.extractVersion(bambooRequest);
         BambooRequestContext.initRequestContext(bambooRequest, requestVersion);
@@ -36,8 +37,11 @@ public class DefaultRibbonConnectionPoint implements BambooRibbonConnectionPoint
     public void shutdownconnectPoint() {
         try {
             executeAfterReuqestTrigger();
+        } catch (Exception e) {
+            ConnectPointContext.getContextLocal().setExcption(e);
         } finally {
             curRequestTriggers.remove();
+            ConnectPointContext.contextLocal.remove();
             BambooRequestContext.shutdownRequestContext();
         }
     }
@@ -72,17 +76,19 @@ public class DefaultRibbonConnectionPoint implements BambooRibbonConnectionPoint
 
 
     protected void executeBeforeReuqestTrigger() {
+        ConnectPointContext connectPointContext = ConnectPointContext.getContextLocal();
         List<LoadBalanceRequestTrigger> requestTriggers = chooseRequestTrigger();
         if (requestTriggers != null && !requestTriggers.isEmpty()) {
-            requestTriggers.forEach(LoadBalanceRequestTrigger::before);
+            requestTriggers.forEach(trigger -> trigger.before(connectPointContext));
         }
     }
 
 
     protected void executeAfterReuqestTrigger() {
+        ConnectPointContext connectPointContext = ConnectPointContext.getContextLocal();
         List<LoadBalanceRequestTrigger> requestTriggers = chooseRequestTrigger();
         if (requestTriggers != null && !requestTriggers.isEmpty()) {
-            requestTriggers.forEach(LoadBalanceRequestTrigger::after);
+            requestTriggers.forEach(trigger -> trigger.after(connectPointContext));
         }
     }
 }

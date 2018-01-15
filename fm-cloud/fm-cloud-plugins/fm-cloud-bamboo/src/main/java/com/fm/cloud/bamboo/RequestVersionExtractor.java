@@ -5,7 +5,7 @@ public interface RequestVersionExtractor {
     String extractVersion(BambooRequest  bambooRequest);
 
 
-    public static class Default implements RequestVersionExtractor{
+    class Default implements RequestVersionExtractor{
         private static final String VERSION = "version";
 
         @Override

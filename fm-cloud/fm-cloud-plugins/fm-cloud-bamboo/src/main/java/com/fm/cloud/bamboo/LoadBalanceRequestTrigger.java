@@ -5,7 +5,7 @@ public interface LoadBalanceRequestTrigger {
 
     boolean shouldExecute();
 
-    void before();
+    void before(ConnectPointContext connectPointContext);
 
-    void after();
+    void after(ConnectPointContext connectPointContext);
 }

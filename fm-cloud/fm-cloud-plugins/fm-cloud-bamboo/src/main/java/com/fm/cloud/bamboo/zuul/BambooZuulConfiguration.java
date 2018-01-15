@@ -2,12 +2,13 @@ package com.fm.cloud.bamboo.zuul;
 
 import com.fm.cloud.bamboo.zuul.filter.BambooPostZuulFilter;
 import com.fm.cloud.bamboo.zuul.filter.BambooPreZuulFilter;
+import com.netflix.zuul.http.ZuulServlet;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnClass(name = "com.netflix.zuul.http.ZuulServlet")
+@ConditionalOnClass(value = ZuulServlet.class)
 public class BambooZuulConfiguration {
 
     @Bean
