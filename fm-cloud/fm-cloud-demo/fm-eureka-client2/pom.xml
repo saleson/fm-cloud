@@ -38,8 +38,6 @@
             <groupId>com.fm</groupId>
             <artifactId>fm-cloud-graybunny</artifactId>
         </dependency>
-
-
     </dependencies>
 
 </project>

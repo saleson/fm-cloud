@@ -9,9 +9,9 @@ import com.netflix.niws.loadbalancer.DiscoveryEnabledServer;
 
 import java.util.List;
 
-public class GrayDesisionPredicate extends AbstractServerPredicate {
+public class GrayDecisionPredicate extends AbstractServerPredicate {
 
-    public GrayDesisionPredicate(GrayLoadBalanceRule rule) {
+    public GrayDecisionPredicate(GrayLoadBalanceRule rule) {
         super(rule);
     }
 

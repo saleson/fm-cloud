@@ -25,7 +25,7 @@ public class GrayLoadBalanceRule extends BambooZoneAvoidanceRule {
 
     public GrayLoadBalanceRule() {
         super();
-        GrayDesisionPredicate apiVersionPredicate = new GrayDesisionPredicate(this);
+        GrayDecisionPredicate apiVersionPredicate = new GrayDecisionPredicate(this);
         grayCompositePredicate = CompositePredicate.withPredicates(super.getPredicate(),
                 apiVersionPredicate).build();
     }

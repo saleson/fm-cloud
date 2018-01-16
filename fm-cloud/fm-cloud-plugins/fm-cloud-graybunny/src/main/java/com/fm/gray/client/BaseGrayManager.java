@@ -101,6 +101,11 @@ public class BaseGrayManager extends AbstractGrayManager {
 
     private void grayEnroll(){
         Thread t = new Thread(()->{
+
+            try {
+                Thread.sleep(clientConfig.grayEnrollDealyTimeInMs());
+            } catch (InterruptedException e) {
+            }
             log.info("灰度注册自身实例...");
             InstanceLocalInfo localInfo = GrayBunnyAppContext.getInstanceLocalInfo();
             try {

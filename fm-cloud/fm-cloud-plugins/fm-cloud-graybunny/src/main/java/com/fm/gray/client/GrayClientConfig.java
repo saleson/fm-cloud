@@ -5,6 +5,8 @@ public interface GrayClientConfig {
 
     boolean isGrayEnroll();
 
+    int grayEnrollDealyTimeInMs();
+
 
     String getServerUrl();
 

@@ -29,6 +29,11 @@ public class GrayBunnyProperties implements GrayClientConfig{
         return instance.isGrayEnroll();
     }
 
+    @Override
+    public int grayEnrollDealyTimeInMs() {
+        return instance.getGrayEnrollDealyTimeInMs();
+    }
+
     public String getServerUrl() {
         return serverUrl;
     }
@@ -62,6 +67,7 @@ public class GrayBunnyProperties implements GrayClientConfig{
     public class InstanceConfig{
 
         private boolean grayEnroll;
+        private int grayEnrollDealyTimeInMs = 40000;
 
         public boolean isGrayEnroll() {
             return grayEnroll;
@@ -69,6 +75,14 @@ public class GrayBunnyProperties implements GrayClientConfig{
 
         public void setGrayEnroll(boolean grayEnroll) {
             this.grayEnroll = grayEnroll;
+        }
+
+        public int getGrayEnrollDealyTimeInMs() {
+            return grayEnrollDealyTimeInMs;
+        }
+
+        public void setGrayEnrollDealyTimeInMs(int grayEnrollDealyTimeInMs) {
+            this.grayEnrollDealyTimeInMs = grayEnrollDealyTimeInMs;
         }
     }
 }

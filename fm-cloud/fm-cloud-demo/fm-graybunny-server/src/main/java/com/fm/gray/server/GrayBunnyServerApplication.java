@@ -16,7 +16,6 @@ import java.net.UnknownHostException;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients
 public class GrayBunnyServerApplication {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(GrayBunnyServerApplication.class);
 
