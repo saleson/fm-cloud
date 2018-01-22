@@ -35,9 +35,9 @@ public class HttpInformationClient implements InformationClient {
         try {
             ResponseEntity<List<GrayService>> responseEntity = rest.exchange(url, HttpMethod.GET, null, typeRef);
             return responseEntity.getBody();
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             log.error("获取灰度服务列表失败", e);
-            return null;
+            throw e;
         }
     }
 
@@ -50,9 +50,9 @@ public class HttpInformationClient implements InformationClient {
         try {
             ResponseEntity<GrayService> responseEntity = rest.getForEntity(url, GrayService.class, params);
             return responseEntity.getBody();
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             log.error("获取灰度服务失败", e);
-            return null;
+            throw e;
         }
     }
 
@@ -66,9 +66,9 @@ public class HttpInformationClient implements InformationClient {
         try {
             ResponseEntity<GrayInstance> responseEntity = rest.getForEntity(url, GrayInstance.class, params);
             return responseEntity.getBody();
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             log.error("获取灰度服务实例失败", e);
-            return null;
+            throw e;
         }
     }
 
@@ -81,7 +81,7 @@ public class HttpInformationClient implements InformationClient {
         String url = this.baseUrl + "/gray/services/{serviceId}/instance";
         try {
             rest.postForEntity(url, grayInstance, null, serviceId);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             log.error("灰度服务实例下线失败", e);
             throw e;
         }
@@ -102,6 +102,7 @@ public class HttpInformationClient implements InformationClient {
             rest.delete(url, params);
         } catch (Exception e) {
             log.error("灰度服务实例下线失败", e);
+            throw e;
         }
     }
 }

@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: acturator-admin
+server:
+  port: 10103
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://localhost:10002/eureka/
+  instance:
+    instanceId: ${spring.application.name}:${server.port}
+    status-page-url: http://${spring.cloud.client.ipAddress}:${server.port}

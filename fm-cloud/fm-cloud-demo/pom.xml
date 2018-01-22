@@ -18,6 +18,7 @@
         <module>fm-zuul-server</module>
         <module>fm-eureka-client2</module>
         <module>fm-graybunny-server</module>
+        <module>fm-actuator-admin</module>
     </modules>
 
     <build>

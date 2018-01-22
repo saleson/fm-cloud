@@ -7,6 +7,7 @@ import com.fm.gray.client.*;
 import com.fm.gray.client.config.properties.GrayBunnyProperties;
 import com.fm.gray.core.GrayManager;
 import com.fm.gray.core.InformationClient;
+import com.fm.gray.core.RetryableInformationClient;
 import com.fm.gray.ribbon.GrayLoadBalanceRule;
 import com.netflix.appinfo.EurekaInstanceConfig;
 import com.netflix.appinfo.InstanceInfo;
@@ -74,7 +75,11 @@ public class GrayBunnyConfiguration {
 
         @Bean
         public InformationClient informationClient() {
-            return new HttpInformationClient(grayBunnyProperties.getServerUrl(), new RestTemplate());
+            InformationClient client = new HttpInformationClient(grayBunnyProperties.getServerUrl(), new RestTemplate());
+            if(!grayBunnyProperties.isRetryable()){
+                return client;
+            }
+            return new RetryableInformationClient(grayBunnyProperties.getRetryNumberOfRetries(), client);
         }
 
 

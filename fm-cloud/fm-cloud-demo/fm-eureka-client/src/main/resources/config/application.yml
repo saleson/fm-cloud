@@ -18,5 +18,5 @@ eureka:
 
 graybunny:
   instance:
-    grayEnroll: true
+    grayEnroll: false
 #  serverUrl: http://192.168.6.22:10202

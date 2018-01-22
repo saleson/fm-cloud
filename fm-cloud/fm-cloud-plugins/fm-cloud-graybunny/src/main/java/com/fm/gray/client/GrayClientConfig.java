@@ -13,4 +13,9 @@ public interface GrayClientConfig {
 
     int getServiceUpdateIntervalTimerInMs();
 
+
+    boolean isRetryable();
+
+    int getRetryNumberOfRetries();
+
 }
