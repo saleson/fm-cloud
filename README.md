@@ -65,7 +65,7 @@ fm-cloud-bamboo支持RestTemplate、Feign、网关(Zuul)、断路器（hystrix,�
 灰度发布是在多版本控制的基础上进一步扩展实现出来的项目 -> fm-cloud-graybunny，抽象出灰度服务、灰度服务实例、灰度策略、灰度决策等。支持A/B test, 金丝雀 test。 灰度策略可以从request ip, request patameter, request header等方面进行去创建，也可以根据bamboo的LoadBalanceRequestTrigger结合graybuanny的接口去扩展灰度策略和灰度决策。
 
 设计6个接口，4个模型对象：
-对象：
+###### 对象
     
 * GrayService
 灰度服务
@@ -80,7 +80,7 @@ fm-cloud-bamboo支持RestTemplate、Feign、网关(Zuul)、断路器（hystrix,�
 灰度策略
 
 
-接口:
+###### 接口
 
 * GrayManager
 灰度客户端管理器，维护灰度列表，维护自身灰度状态，创建灰度决策对象。抽象实现类AbstractGrayManager实现了基础的获取灰度列表， 创建灰度决策对象的能力。BaseGrayManger在期基础上进行了扩展，将灰度列表缓存起来，定时从灰度服务端更新灰度列表。
