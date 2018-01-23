@@ -147,7 +147,7 @@ public class GrayBunnyServerApplication {
 
  1. 在pom.xml中加入gm-cloud-graybunny。
  ``` xml
-<dependencies>
+    <dependencies>
         <dependency>
             <groupId>...</groupId>
             <artifactId>...</artifactId>
