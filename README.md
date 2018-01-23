@@ -105,10 +105,37 @@ fm-cloud-bamboo支持RestTemplate、Feign、网关(Zuul)、断路器（hystrix,�
 
 **Gray-Server:**
 在项目的pom.xml加入spring-boot相关的依赖，再加入bamboo-start、graybunny-server-starter，然后启动就可以了。
-![这里写图片描述](http://img.blog.csdn.net/20180123105840350?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTXJfcmFpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+<dependencies>
+        <dependency>
+            <groupId>...</groupId>
+            <artifactId>...</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fm</groupId>
+            <artifactId>fm-cloud-starter-bamboo</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fm</groupId>
+            <artifactId>fm-cloud-starter-graybunny-server</artifactId>
+        </dependency>
+
+    </dependencies>
 
 在启动类中，需要雇用服务发现。
-![这里写图片描述](http://img.blog.csdn.net/20180123105907160?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTXJfcmFpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+``` java
+@SpringBootApplication
+@EnableDiscoveryClient
+public class GrayBunnyServerApplication {
+
+    public static void main(String[] args) throws UnknownHostException {
+        new SpringApplicationBuilder(GrayBunnyServerApplication.class).web(true).run(args)
+    }
+}
+```
 
 启动后，可以访问http://localhost:10202/swagger-ui.html#/service-gray-resouce查看接口列表，也可以调用其中的接口。
 
