@@ -119,13 +119,45 @@ fm-cloud-bamboo支持RestTemplate、Feign、网关(Zuul)、断路器（hystrix,�
 **Gray-Client**
 
  1. 在pom.xml中加入gm-cloud-graybunny。
- ![这里写图片描述](http://img.blog.csdn.net/20180123111619105?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTXJfcmFpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+ ``` xml
+<dependencies>
+        <dependency>
+            <groupId>...</groupId>
+            <artifactId>...</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fm</groupId>
+            <artifactId>fm-cloud-starter-bamboo</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fm</groupId>
+            <artifactId>fm-cloud-graybunny</artifactId>
+        </dependency>
+    </dependencies>
+ ```
  
  2. 在application.yaml中加入灰度配置。
- ![这里写图片描述](http://img.blog.csdn.net/20180123111636610?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTXJfcmFpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+ ``` yaml
+ graybunny:
+  instance:
+    grayEnroll: true #是否在启动后自动注册成灰度实例
+  serverUrl: http://localhost:10202 #灰度服务端的url
+ ```
  
  3. 在启动类中加入灰度客户端的注解@EnableGrayBunny
-![这里写图片描述](http://img.blog.csdn.net/20180123111705542?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTXJfcmFpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)  
+``` java
+@SpringBootApplication
+@EnableDiscoveryClient
+@EnableFeignClients
+@EnableGrayBunny
+public class EurekaClient2Application {
+
+
+    public static void main(String[] args) throws UnknownHostException {
+        new SpringApplicationBuilder(EurekaClient2Application.class).web(true).run(args);
+    }
+}
+```
 
 
 这样灰略度的服务端和客户端都配置好了， 只要在灰度服务端开启灰度实例和灰度策，在灰度客户端就会自动进行灰度路由。
