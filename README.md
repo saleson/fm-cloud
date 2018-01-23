@@ -105,7 +105,8 @@ fm-cloud-bamboo支持RestTemplate、Feign、网关(Zuul)、断路器（hystrix,�
 
 **Gray-Server:**
 在项目的pom.xml加入spring-boot相关的依赖，再加入bamboo-start、graybunny-server-starter，然后启动就可以了。
-<dependencies>
+``` xml
+    <dependencies>
         <dependency>
             <groupId>...</groupId>
             <artifactId>...</artifactId>
@@ -124,7 +125,7 @@ fm-cloud-bamboo支持RestTemplate、Feign、网关(Zuul)、断路器（hystrix,�
         </dependency>
 
     </dependencies>
-
+```
 在启动类中，需要雇用服务发现。
 ``` java
 @SpringBootApplication
