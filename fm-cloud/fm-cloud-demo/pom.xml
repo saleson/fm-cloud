@@ -19,6 +19,7 @@
         <module>fm-eureka-client2</module>
         <module>fm-graybunny-server</module>
         <module>fm-actuator-admin</module>
+        <module>fm-zipkin-server-demo</module>
     </modules>
 
     <build>

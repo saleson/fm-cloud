@@ -1,6 +1,11 @@
 spring:
   application:
     name: eureka-client2
+  sleuth:
+    sampler:
+      percentage: 0.9
+  zipkin:
+    base-url: http://localhost:10201
 server:
   port: 10102
 eureka:
