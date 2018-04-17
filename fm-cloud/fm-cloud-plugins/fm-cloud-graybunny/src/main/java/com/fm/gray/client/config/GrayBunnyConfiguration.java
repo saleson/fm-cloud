@@ -8,17 +8,13 @@ import com.fm.gray.client.config.properties.GrayBunnyProperties;
 import com.fm.gray.core.GrayManager;
 import com.fm.gray.core.InformationClient;
 import com.fm.gray.core.RetryableInformationClient;
-import com.fm.gray.ribbon.GrayLoadBalanceRule;
 import com.netflix.appinfo.EurekaInstanceConfig;
-import com.netflix.appinfo.InstanceInfo;
-import com.netflix.client.config.IClientConfig;
 import com.netflix.discovery.EurekaClient;
-import com.netflix.loadbalancer.IRule;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.netflix.ribbon.RibbonClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -26,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableConfigurationProperties({GrayBunnyProperties.class})
+@RibbonClients(defaultConfiguration = GrayRibbonClientsConfiguration.class)
 public class GrayBunnyConfiguration {
 
 
@@ -35,22 +32,22 @@ public class GrayBunnyConfiguration {
     }
 
 
-    @Bean
-    public IRule ribbonRule(@Autowired(required = false) IClientConfig config) {
-        GrayLoadBalanceRule rule = new GrayLoadBalanceRule();
-        rule.initWithNiwsConfig(config);
-        return rule;
-    }
+//    @Bean
+//    public IRule ribbonRule(@Autowired(required = false) IClientConfig config) {
+//        GrayLoadBalanceRule rule = new GrayLoadBalanceRule();
+//        rule.initWithNiwsConfig(config);
+//        return rule;
+//    }
 
     @Bean
     @Order(value = BambooConstants.INITIALIZING_ORDER + 1)
-    public GrayBunnyInitializingBean grayBunnyInitializingBean(){
+    public GrayBunnyInitializingBean grayBunnyInitializingBean() {
         return new GrayBunnyInitializingBean();
     }
 
 
     @Bean
-    public InstanceLocalInfo instanceLocalInfo(@Autowired EurekaClient eurekaClient){
+    public InstanceLocalInfo instanceLocalInfo(@Autowired EurekaClient eurekaClient) {
         EurekaInstanceConfig instanceConfig = eurekaClient.getApplicationInfoManager().getEurekaInstanceConfig();
         InstanceLocalInfo localInfo = new InstanceLocalInfo();
         localInfo.setInstanceId(instanceConfig.getInstanceId());
@@ -62,7 +59,7 @@ public class GrayBunnyConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public GrayDecisionFactory grayDecisionFactory(){
+    public GrayDecisionFactory grayDecisionFactory() {
         return new DefaultGrayDecisionFactory();
     }
 
@@ -76,7 +73,7 @@ public class GrayBunnyConfiguration {
         @Bean
         public InformationClient informationClient() {
             InformationClient client = new HttpInformationClient(grayBunnyProperties.getServerUrl(), new RestTemplate());
-            if(!grayBunnyProperties.isRetryable()){
+            if (!grayBunnyProperties.isRetryable()) {
                 return client;
             }
             return new RetryableInformationClient(grayBunnyProperties.getRetryNumberOfRetries(), client);
