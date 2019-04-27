@@ -4,12 +4,10 @@ import com.fm.gray.client.EnableGrayBunny;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.bus.jackson.RemoteApplicationEventScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
-import org.springframework.web.client.RestTemplate;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -21,6 +19,7 @@ import java.net.UnknownHostException;
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableGrayBunny
+@RemoteApplicationEventScan
 public class EurekaClient2Application {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(EurekaClient2Application.class);
 

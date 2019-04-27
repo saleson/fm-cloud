@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: mq-rabbit
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+  cloud:
+    stream:
+      bindings:
+#        TestInput:
+#          group: service-a
+#          destination: test
+#          consumer:
+#            max-attempts: 1
+        TestOutput:
+          destination: test
+
+      rabbit:
+        bindings:
+          testInput:
+            consumer:
+#              auto-bind-dlq: true
+              acknowledgeMode: AUTO
+#              acknowledgeMode: MANUAL
+#              acknowledgeMode: NONE
+#              dlqDeadLetterExchange:
+#              dlqTtl: 10000
+
+server:
+  port: 8888

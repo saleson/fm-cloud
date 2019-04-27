@@ -3,9 +3,14 @@ spring:
     name: eureka-client2
   sleuth:
     sampler:
-      percentage: 0.9
+      percentage: 1
   zipkin:
-    base-url: http://localhost:10201
+    base-url: http://192.168.0.227:9411
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
 server:
   port: 10102
 eureka:
@@ -20,6 +25,10 @@ eureka:
       serverZone: http://localhost:10001/eureka/
 feign:
   hystrix:
+    enabled: true
+  httpclient:
+    enabled: false
+  okhttp:
     enabled: true
 hystrix:
   command:
@@ -36,4 +45,4 @@ graybunny:
 
 logging:
   level:
-    root: DEBUG
+    root: INFO

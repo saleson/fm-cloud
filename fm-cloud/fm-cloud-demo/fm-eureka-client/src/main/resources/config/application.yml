@@ -1,8 +1,16 @@
 spring:
   application:
     name: eureka-client
+  sleuth:
+    sampler:
+      percentage: 1
   zipkin:
-    base-url: http://localhost:10201
+    base-url: http://192.168.0.227:9411
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
 server:
   port: 10101
 eureka:
@@ -12,7 +20,7 @@ eureka:
     fetch-registry: true
     serviceUrl:
 #      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
-      defaultZone: http://localhost:10002/eureka/
+      defaultZone: http://localhost:10002/eureka/,http:localhost:10003/eureka
   instance:
     instanceId: ${spring.application.name}:${server.port}
     metadata-map:

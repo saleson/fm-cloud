@@ -1,6 +1,12 @@
 spring:
   application:
     name: api-gateway
+  sleuth:
+    sampler:
+      percentage: 1
+  zipkin:
+    base-url: http://192.168.0.227:9411
+
 server:
   port: 10002
 eureka:

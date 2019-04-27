@@ -20,6 +20,9 @@
         <module>fm-graybunny-server</module>
         <module>fm-actuator-admin</module>
         <module>fm-zipkin-server-demo</module>
+        <module>fm-mq-rabbit</module>
+        <module>fm-mq-rabbit2</module>
+
     </modules>
 
     <build>

@@ -3,3 +3,25 @@ spring:
     name: zipkin-server
 server:
   port: 10201
+#eureka:
+#  client:
+##    enabled: true
+#    register-with-eureka: true
+#    fetch-registry: true
+#    serviceUrl:
+##      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+#      defaultZone: http://localhost:10002/eureka/
+#  instance:
+#    instanceId: ${spring.application.name}:${server.port}
+zipkin:
+  storage:
+#    StorageComponent: elasticsearch
+    type: elasticsearch
+    elasticsearch:
+      hosts: http://192.168.0.204:9200
+#      legacy-reads-enabled: false
+#  storage:
+#    type: mysql
+#    mysql:
+#      username: root
+#      password: root

@@ -1,14 +1,14 @@
 package com.fm.client.web.rest;
 
+import com.fm.client.event.BusEvent;
 import com.fm.client.feign.TestClient;
 import com.google.common.collect.ImmutableMap;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +19,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/test")
-public class TestResource {
+public class TestResource implements ApplicationContextAware {
     @Autowired
     private RestTemplate restTemplate;
     @Autowired
@@ -47,6 +47,7 @@ public class TestResource {
     @RequestMapping(value = "/get2", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, String> testGet2(@RequestParam(value = "version", required = false) String version) {
+        cxt.publishEvent(new BusEvent("test", cxt.getId(), "**"));
         Map map = testClient.testGet(version);
         if (map != null) {
             return map;
@@ -79,4 +80,10 @@ public class TestResource {
         }
     }
 
+    private ApplicationContext cxt;
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.cxt = applicationContext;
+    }
 }

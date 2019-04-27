@@ -12,13 +12,67 @@
     <artifactId>fm-zipkin-server-demo</artifactId>
     <dependencies>
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.zipkin.java</groupId>
             <artifactId>zipkin-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.zipkin.zipkin2</groupId>
+            <artifactId>zipkin-storage-elasticsearch</artifactId>
+            <version>2.2.2</version>
+            <optional>true</optional>
+        </dependency>
+
+
+        <!--<dependency>-->
+        <!--<groupId>io.zipkin.java</groupId>-->
+        <!--<artifactId>zipkin-storage-elasticsearch-http</artifactId>-->
+        <!--<version>2.2.2</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>io.zipkin.java</groupId>
+            <artifactId>zipkin-autoconfigure-storage-elasticsearch-http</artifactId>
+            <version>2.2.2</version>
+            <optional>true</optional>
+        </dependency>
+
+        <!--<dependency>-->
+        <!--<groupId>io.zipkin.java</groupId>-->
+        <!--<artifactId>zipkin-autoconfigure-storage-mysql</artifactId>-->
+        <!--<version>2.2.2</version>-->
+        <!--<optional>true</optional>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>io.zipkin.zipkin2</groupId>-->
+        <!--<artifactId>zipkin-storage-mysql</artifactId>-->
+        <!--<version>2.2.2</version>-->
+        <!--<optional>true</optional>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>io.zipkin.java</groupId>-->
+        <!--<artifactId>zipkin-autoconfigure-storage-elasticsearch-aws</artifactId>-->
+        <!--<version>2.2.2</version>-->
+        <!--<optional>true</optional>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>io.zipkin.java</groupId>
+            <artifactId>zipkin-autoconfigure-ui</artifactId>
+            <version>2.2.2</version>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>io.zipkin.java</groupId>
             <artifactId>zipkin-autoconfigure-ui</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.zipkin.dependencies</groupId>
+            <artifactId>zipkin-dependencies-elasticsearch</artifactId>
+            <version>1.11.3</version>
+        </dependency>
+
     </dependencies>
 
 </project>
